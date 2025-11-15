@@ -1,0 +1,234 @@
+import { useState, useEffect } from 'react';
+import { useMpesa } from '../hooks/useMpesa';
+import { Smartphone, Loader2, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
+
+const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('idle'); // idle, processing, success, failed
+  const [checkoutRequestID, setCheckoutRequestID] = useState(null);
+  const { loading, error, initiatePayment, queryPaymentStatus } = useMpesa();
+
+  // Format phone number as user types
+  const handlePhoneChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    
+    // Limit to 12 digits (254XXXXXXXXX)
+    if (value.length > 12) {
+      value = value.slice(0, 12);
+    }
+    
+    // Auto-add 254 prefix if user starts with 0 or 7
+    if (value.startsWith('0')) {
+      value = '254' + value.slice(1);
+    } else if (value.startsWith('7') && !value.startsWith('254')) {
+      value = '254' + value;
+    }
+    
+    setPhoneNumber(value);
+  };
+
+  const formatPhoneDisplay = (phone) => {
+    if (!phone) return '';
+    if (phone.startsWith('254')) {
+      return '+' + phone.slice(0, 3) + ' ' + phone.slice(3, 6) + ' ' + phone.slice(6, 9) + ' ' + phone.slice(9);
+    }
+    return phone;
+  };
+
+  const handlePayment = async () => {
+    if (!phoneNumber || phoneNumber.length < 12) {
+      alert('Please enter a valid phone number');
+      return;
+    }
+
+    setPaymentStatus('processing');
+
+    try {
+      const result = await initiatePayment({
+        phoneNumber,
+        amount,
+        accountReference: accountReference || `ORDER-${Date.now()}`,
+        transactionDesc: 'SmartWash Service Payment',
+      });
+
+      if (result.success) {
+        setCheckoutRequestID(result.data.CheckoutRequestID);
+        // Poll for payment status
+        pollPaymentStatus(result.data.CheckoutRequestID);
+      } else {
+        setPaymentStatus('failed');
+        if (onError) onError(result.error);
+      }
+    } catch (err) {
+      setPaymentStatus('failed');
+      if (onError) onError(err.message);
+    }
+  };
+
+  const pollPaymentStatus = async (requestID) => {
+    let attempts = 0;
+    const maxAttempts = 30; // Poll for 60 seconds (30 * 2s)
+
+    const poll = setInterval(async () => {
+      attempts++;
+
+      try {
+        const result = await queryPaymentStatus(requestID);
+
+        if (result.success && result.data) {
+          const { ResultCode } = result.data;
+
+          if (ResultCode === '0') {
+            // Payment successful
+            clearInterval(poll);
+            setPaymentStatus('success');
+            if (onSuccess) onSuccess(result.data);
+          } else if (ResultCode !== '1032') {
+            // Payment failed (1032 means still processing)
+            clearInterval(poll);
+            setPaymentStatus('failed');
+            if (onError) onError(result.data.ResultDesc);
+          }
+        }
+
+        if (attempts >= maxAttempts) {
+          clearInterval(poll);
+          setPaymentStatus('timeout');
+          if (onError) onError('Payment verification timeout. Please check your phone.');
+        }
+      } catch (err) {
+        if (attempts >= maxAttempts) {
+          clearInterval(poll);
+          setPaymentStatus('failed');
+          if (onError) onError('Failed to verify payment status');
+        }
+      }
+    }, 2000); // Poll every 2 seconds
+  };
+
+  const resetPayment = () => {
+    setPaymentStatus('idle');
+    setPhoneNumber('');
+    setCheckoutRequestID(null);
+  };
+
+  return (
+    <div className="w-full max-w-md mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+      <div className="flex items-center justify-center mb-6">
+        <Smartphone className="w-12 h-12 text-green-600" />
+      </div>
+
+      <h2 className="text-2xl font-bold text-center mb-2 text-gray-900 dark:text-white">
+        M-Pesa Payment
+      </h2>
+      <p className="text-center text-gray-600 dark:text-gray-400 mb-6">
+        Pay with Lipa Na M-Pesa
+      </p>
+
+      {paymentStatus === 'idle' && (
+        <>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              M-Pesa Phone Number
+            </label>
+            <input
+              type="tel"
+              value={formatPhoneDisplay(phoneNumber)}
+              onChange={handlePhoneChange}
+              placeholder="+254 7XX XXX XXX"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Enter your Safaricom number
+            </p>
+          </div>
+
+          <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600 dark:text-gray-300">Amount to Pay:</span>
+              <span className="text-2xl font-bold text-green-600">
+                KES {amount.toLocaleString()}
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={handlePayment}
+            disabled={loading || !phoneNumber || phoneNumber.length < 12}
+            className="w-full py-3 px-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              'Pay Now'
+            )}
+          </button>
+
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start">
+              <XCircle className="w-5 h-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          )}
+        </>
+      )}
+
+      {paymentStatus === 'processing' && (
+        <div className="text-center">
+          <Loader2 className="w-16 h-16 mx-auto mb-4 animate-spin text-green-600" />
+          <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+            Processing Payment
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Check your phone for the M-Pesa prompt and enter your PIN
+          </p>
+          <div className="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+            <AlertCircle className="w-4 h-4" />
+            <span>Waiting for payment confirmation...</span>
+          </div>
+        </div>
+      )}
+
+      {paymentStatus === 'success' && (
+        <div className="text-center">
+          <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-green-600" />
+          <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+            Payment Successful!
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            Your payment has been processed successfully
+          </p>
+          <button
+            onClick={resetPayment}
+            className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+          >
+            Make Another Payment
+          </button>
+        </div>
+      )}
+
+      {(paymentStatus === 'failed' || paymentStatus === 'timeout') && (
+        <div className="text-center">
+          <XCircle className="w-16 h-16 mx-auto mb-4 text-red-600" />
+          <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+            Payment {paymentStatus === 'timeout' ? 'Timeout' : 'Failed'}
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            {error || 'Your payment could not be processed'}
+          </p>
+          <button
+            onClick={resetPayment}
+            className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MpesaPayment;

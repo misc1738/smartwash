@@ -1,0 +1,19 @@
+.text-type {
+  display: inline-block;
+}
+
+.text-type__content {
+  display: inline-block;
+  filter: drop-shadow(0 0 30px rgba(44, 155, 239, 0.6)) drop-shadow(0 4px 20px rgba(44, 155, 239, 0.4));
+}
+
+.text-type__cursor {
+  display: inline-block;
+  margin-left: 4px;
+  font-weight: bold;
+  filter: drop-shadow(0 0 20px rgba(44, 155, 239, 0.8));
+}
+
+.text-type__cursor--hidden {
+  opacity: 0 !important;
+}
