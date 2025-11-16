@@ -40,9 +40,11 @@ class MpesaService {
       );
 
       this.accessToken = response.data.access_token;
-      // Set expiry time (token valid for 3599 seconds, we'll refresh 1 minute early)
-      this.tokenExpiry = Date.now() + (3599 - 60) * 1000;
-      
+      // Use expires_in from provider when available, otherwise fall back to 3599s
+      const expiresIn = Number(response.data.expires_in) || 3599;
+      // Refresh 60 seconds before expiry
+      this.tokenExpiry = Date.now() + (expiresIn - 60) * 1000;
+
       return this.accessToken;
     } catch (error) {
       console.error('Error getting access token:', error.response?.data || error.message);
@@ -63,13 +65,17 @@ class MpesaService {
    * Get current timestamp in YYYYMMDDHHmmss format
    */
   getTimestamp() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    // Generate timestamp in East Africa Time (UTC+3) to avoid password/timestamp mismatches
+    const now = new Date();
+    // Convert local time to UTC, then add 3 hours for EAT
+    const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+    const eat = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+    const year = eat.getUTCFullYear();
+    const month = String(eat.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(eat.getUTCDate()).padStart(2, '0');
+    const hours = String(eat.getUTCHours()).padStart(2, '0');
+    const minutes = String(eat.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(eat.getUTCSeconds()).padStart(2, '0');
     return `${year}${month}${day}${hours}${minutes}${seconds}`;
   }
 
@@ -188,10 +194,12 @@ class MpesaService {
         resultDesc: stkCallback.ResultDesc,
       };
 
-      // If successful payment
-      if (stkCallback.ResultCode === 0) {
-        const callbackMetadata = stkCallback.CallbackMetadata?.Item || [];
-        
+      // If successful payment (coerce numeric/string differences)
+      const rc = Number(stkCallback.ResultCode);
+      if (rc === 0) {
+        // CallbackMetadata sometimes comes as { Item: [...] } or as an array directly
+        const callbackMetadata = stkCallback.CallbackMetadata?.Item || stkCallback.CallbackMetadata || [];
+
         result.success = true;
         result.amount = callbackMetadata.find(item => item.Name === 'Amount')?.Value;
         result.mpesaReceiptNumber = callbackMetadata.find(item => item.Name === 'MpesaReceiptNumber')?.Value;

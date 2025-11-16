@@ -44,8 +44,16 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  // Update current user object (merge patch) and persist
+  const updateUser = (patch) => {
+    setUser((prev) => {
+      const next = { ...(prev || {}), ...(patch || {}) };
+      return next;
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

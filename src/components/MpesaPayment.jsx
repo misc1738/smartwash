@@ -76,18 +76,31 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
         const result = await queryPaymentStatus(requestID);
 
         if (result.success && result.data) {
-          const { ResultCode } = result.data;
+          // Daraja can return different shapes and numeric vs string codes.
+          // Normalize possible locations for the result code.
+          const raw = result.data;
+          const possibleCodes = [
+            raw.ResultCode,
+            raw.ResponseCode,
+            raw.Result?.ResultCode,
+            raw.Response?.ResultCode,
+          ];
 
-          if (ResultCode === '0') {
-            // Payment successful
+          // Find the first non-null/undefined code and coerce to number
+          const found = possibleCodes.find((c) => c !== undefined && c !== null);
+          const resultCode = found !== undefined && found !== null ? Number(found) : null;
+
+          // Treat 0 as success. 1032 is commonly used by Safaricom to mean 'still processing'.
+          if (resultCode === 0) {
             clearInterval(poll);
             setPaymentStatus('success');
             if (onSuccess) onSuccess(result.data);
-          } else if (ResultCode !== '1032') {
-            // Payment failed (1032 means still processing)
+          } else if (resultCode !== 1032) {
+            // Any other code (other than 'still processing') => failure
             clearInterval(poll);
             setPaymentStatus('failed');
-            if (onError) onError(result.data.ResultDesc);
+            const message = raw.ResultDesc || raw.ResponseDescription || raw.Response?.ResponseDescription || raw.Result?.ResultDesc || 'Payment failed';
+            if (onError) onError(message);
           }
         }
 
