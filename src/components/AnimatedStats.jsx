@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import ThemeImage from './ThemeImage';
 
 const stats = [
   { label: "Serving", value: 15, suffix: "+ Nairobi Areas" },
@@ -79,14 +80,7 @@ const AnimatedStats = () => (
   <section className="relative py-32 bg-black overflow-hidden">
     {/* Background Image with Dark Overlay */}
     <div className="absolute inset-0 opacity-20">
-      <img 
-        src="/img/pexels-karola-g-4870724.jpg"
-        alt="Stats background"
-        className="w-full h-full object-cover"
-        onError={(e) => {
-          e.target.src = "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80";
-        }}
-      />
+  <ThemeImage base="/img/pexels-karola-g-4870724.jpg" srcLight="/img/pexels-karola-g-4870727.jpg" alt="Stats background" className="w-full h-full" fallback="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80" />
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
     </div>
 

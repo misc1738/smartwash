@@ -2,7 +2,7 @@ import { Check, ArrowRight, Sparkles } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef, createRef } from 'react';
 import BookingDrawer from './BookingDrawer';
-import LazyImage from './ui/LazyImage';
+import ThemeImage from './ThemeImage';
 import GlowingEffect from './ui/GlowingEffect';
 
 const services = [
@@ -12,7 +12,8 @@ const services = [
     subtitle: "Essential Clean",
     price: "KSh 899",
     description: "Hand wash and dry for a spotless exterior finish",
-    image: "/img/pexels-kopriva.jpg",
+  image: "/img/pexels-kopriva.jpg",
+  srcLight: "/img/pexels-karola-g-4870724.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&q=80",
     features: [
       'Hand Wash & Dry',
@@ -27,7 +28,8 @@ const services = [
     subtitle: "Deep Clean",
     price: "KSh 1,349",
     description: "Complete interior cleaning and sanitization",
-    image: "/img/pexels-mcraftpix-21011.jpg",
+  image: "/img/pexels-mcraftpix-21011.jpg",
+  srcLight: "/img/pexels-sarmad-mughal-94606-305070.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=800&q=80",
     features: [
       'Vacuum All Surfaces',
@@ -42,7 +44,8 @@ const services = [
     subtitle: "Premium Shine",
     price: "KSh 1,949",
     description: "Professional waxing for lasting protection and shine",
-    image: "/img/pexels-sarmad-mughal-94606-305070.jpg",
+  image: "/img/pexels-sarmad-mughal-94606-305070.jpg",
+  srcLight: "/img/pexels-mcraftpix-21011.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80",
     features: [
       'Clay Bar Treatment',
@@ -57,7 +60,8 @@ const services = [
     subtitle: "Complete Care",
     price: "KSh 3,499",
     description: "Comprehensive interior and exterior detailing service",
-    image: "/img/pexels-karola-g-4870700.jpg",
+  image: "/img/pexels-karola-g-4870700.jpg",
+  srcLight: "/img/pexels-karola-g-4870727.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&q=80",
     features: [
       'All Services Included',
@@ -214,17 +218,17 @@ export default function Services() {
               
               {/* Image Container */}
               <div className="relative h-96 overflow-hidden will-change-transform">
-                <LazyImage 
-                  src={service.image}
+                <ThemeImage
+                  base={service.image}
+                  srcLight={service.srcLight}
                   alt={`${service.title} - SmartWash Nairobi`}
-                  className="w-full h-full object-cover transition-all duration-700 ease-out"
-                  style={{
+                  className="w-full h-full"
+                  imgStyle={{
                     transform: hoveredIndex === index ? 'scale(1.12) translateZ(0)' : 'scale(1.04) translateZ(0)',
-                    filter: hoveredIndex === index ? 'brightness(0.55)' : 'brightness(0.75)'
+                    filter: hoveredIndex === index ? 'brightness(0.55)' : 'brightness(0.75)',
+                    transition: 'transform 0.7s ease-out, filter 0.7s ease-out'
                   }}
-                  onError={(e) => {
-                    e.target.src = service.fallbackImage;
-                  }}
+                  fallback={service.fallbackImage}
                 />
                 
                 {/* Gradient Overlay - Animated */}

@@ -1,4 +1,5 @@
 import React from "react";
+import ThemeImage from './ThemeImage';
 import { ContainerScroll } from "./ui/ContainerScrollAnimation";
 import { Sparkles, Check } from "lucide-react";
 
@@ -42,14 +43,13 @@ export default function ServiceShowcase() {
           </div>
         }
       >
-        <img
-          src="/img/pexels-mcraftpix-21011.jpg"
+        <ThemeImage
+          base="/img/pexels-mcraftpix-21011.jpg"
+          srcLight="/img/pexels-sarmad-mughal-94606-305070.jpg"
           alt="Professional car detailing - SmartWash Nairobi"
           className="mx-auto rounded-2xl object-cover h-full w-full"
-          draggable={false}
-          onError={(e) => {
-            e.target.src = "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1400&q=80";
-          }}
+          decorative={false}
+          fallback="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1400&q=80"
         />
       </ContainerScroll>
     </div>

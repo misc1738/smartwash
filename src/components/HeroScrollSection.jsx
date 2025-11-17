@@ -1,6 +1,7 @@
 import React from "react";
 import { ContainerScroll } from "./ui/ContainerScrollAnimation";
 import { Sparkles } from "lucide-react";
+import ThemeImage from './ThemeImage';
 
 export default function HeroScrollSection() {
   return (
@@ -32,15 +33,14 @@ export default function HeroScrollSection() {
           </div>
         }
       >
-        <img
-          src="/img/pexels-tima-miroshnichenko-6872146.jpg"
-          alt="Premium car wash and detailing service - SmartWash Nairobi"
-          className="mx-auto rounded-2xl object-cover h-full object-center w-full"
-          draggable={false}
-          onError={(e) => {
-            e.target.src = "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=1400&q=80";
-          }}
-        />
+          <ThemeImage
+            base="/img/pexels-tima-miroshnichenko-6872146.jpg"
+            srcLight="/img/pexels-tima-miroshnichenko-6872150.jpg"
+            alt="Premium car wash and detailing service - SmartWash Nairobi"
+            className="mx-auto rounded-2xl object-cover h-full object-center w-full"
+            decorative={false}
+            fallback="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=1400&q=80"
+          />
       </ContainerScroll>
     </div>
   );

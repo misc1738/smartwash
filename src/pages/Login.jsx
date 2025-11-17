@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import ThemeImage from '../components/ThemeImage';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, Sparkles } from 'lucide-react';
 
 export default function Login() {
@@ -43,14 +44,9 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden relative">
       {/* Static Background */}
       <div className="absolute inset-0">
-        <img 
-          src="/img/pexels-karola-g-4870724.jpg"
-          alt="Login background"
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.src = "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80";
-          }}
-        />
+        <div className="w-full h-full">
+          <ThemeImage base="/img/pexels-karola-g-4870724.jpg" srcLight="/img/pexels-karola-g-4870727.jpg" alt="Login background" className="w-full h-full" fallback="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80" />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70"></div>
       </div>
 

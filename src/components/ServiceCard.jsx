@@ -1,4 +1,5 @@
 import React from 'react';
+import ThemeImage from './ThemeImage';
 
 const ServiceCard = ({ title, description, price, features, image }) => {
   return (
@@ -7,10 +8,10 @@ const ServiceCard = ({ title, description, price, features, image }) => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80 group-hover:from-black/60 group-hover:to-black/90 transition-all duration-500" />
       
       {image && (
-        <img
-          src={image}
+        <ThemeImage
+          base={image}
           alt={title}
-          className="w-full h-full object-cover absolute inset-0 group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full absolute inset-0 group-hover:scale-110 transition-transform duration-500"
         />
       )}
 

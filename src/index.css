@@ -43,11 +43,12 @@
 }
 
 body {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: color 300ms ease, background-color 300ms ease;
 }
 
 /* Mobile viewport height fix */
@@ -99,6 +100,43 @@ body {
 
   --shadow-soft: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
   --shadow-hover: 0 30px 60px -15px rgba(44, 155, 239, 0.3);
+}
+
+/* Light theme variables (activated by adding 'light' class on <html> or <body>) */
+:root.light {
+  --background: 42 95% 98%; /* warm off-white */
+  --foreground: 21 14% 12%; /* near black for text */
+
+  --card: 0 0% 100%;
+  --card-foreground: 21 14% 12%;
+
+  /* Shift primary and accent to warm orange palette */
+  --primary: 24 100% 50%; /* warm orange */
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 24 100% 60%;
+  --primary-glow: 24 100% 70%;
+  
+  --accent: 24 100% 50%; /* same orange accent */
+  --accent-foreground: 0 0% 100%;
+
+  --secondary: 32 20% 30%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 30 20% 70%;
+  --muted-foreground: 30 14% 40%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 92%;
+  --input: 0 0% 96%;
+  --ring: 24 100% 50%;
+
+  --gradient-hero: linear-gradient(135deg, hsl(24, 100%, 98%) 0%, hsl(24, 100%, 90%) 100%);
+  --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
+
+  --shadow-soft: 0 12px 40px -8px rgba(255, 165, 64, 0.08);
+  --shadow-hover: 0 14px 48px -10px rgba(255, 165, 64, 0.12);
 }
 
 /* Animation for mobile menu */
@@ -306,4 +344,20 @@ html {
 
 .shiny-text-original.disabled {
   animation: none;
+}
+
+/* Theme helper utilities (use these in components to adopt theme variables quickly) */
+.text-accent { color: hsl(var(--accent)); }
+.bg-accent { background-color: hsl(var(--accent)); }
+.border-accent { border-color: hsl(var(--accent)); }
+.text-primary { color: hsl(var(--primary)); }
+.bg-primary { background-color: hsl(var(--primary)); }
+
+/* Small utility to visually hide but keep content available to screen readers */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Temporary class added while toggling themes to enable smooth transitions
+   It is added by ThemeToggle and removed shortly after the swap completes. */
+.theme-transition, .theme-transition * {
+  transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, fill 0.35s ease, stroke 0.35s ease;
 }

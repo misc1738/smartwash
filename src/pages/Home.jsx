@@ -5,8 +5,6 @@ import ServiceShowcase from "../components/ServiceShowcase";
 import ImageHeroSection from "../components/ImageHeroSection";
 import About from "../components/About";
 import Services from "../components/Services";
-import LoyaltyRewards from "../components/LoyaltyRewards";
-import PricingCalculator from "../components/PricingCalculator";
 import BookingCalendar from "../components/BookingCalendar";
 import Marquee from "../components/Marquee";
 import SectionDivider from "../components/ui/SectionDivider";
@@ -22,6 +20,7 @@ export default function Home() {
       {/* Image Hero Section 3 - Mobile Convenience with Typing Effect */}
       <ImageHeroSection
         image="/img/pexels-sarmad-mughal-94606-305070.jpg"
+        imageLight="/img/pexels-mcraftpix-21011.jpg"
         subtitle="Ultimate Convenience"
         title={`We Come To You.\nAnywhere in Nairobi.`}
         description="No need to leave your home or office. Our mobile detailing service brings premium car care directly to your doorstep across all Nairobi neighborhoods."
@@ -50,6 +49,7 @@ export default function Home() {
       {/* Image Hero Section 1 - Premium Service */}
       <ImageHeroSection
         image="/img/pexels-karola-g-4870724.jpg"
+        imageLight="/img/pexels-karola-g-4870727.jpg"
         subtitle="Premium Detailing"
         title="Where Excellence Meets Perfection"
         description="Experience the pinnacle of automotive care with our signature detailing services. Every detail matters, every surface shines."
@@ -67,6 +67,7 @@ export default function Home() {
       {/* Image Hero Section 2 - Eco-Friendly */}
       <ImageHeroSection
         image="/img/pexels-kopriva.jpg"
+        imageLight="/img/pexels-karola-g-4870724.jpg"
         subtitle="Sustainable Solutions"
         title="Eco-Friendly. Waterless. Exceptional."
         description="Our innovative waterless technology protects the environment while delivering stunning results. Sustainable car care that makes a difference."
@@ -90,6 +91,7 @@ export default function Home() {
       <ServiceShowcase />
       <ImageHeroSection
         image="/img/pexels-karola-g-4870700.jpg"
+        imageLight="/img/pexels-karola-g-4870727.jpg"
         subtitle="Expert Craftsmen"
         title="Trained Professionals. Guaranteed Results."
         description="Our certified detailing specialists use professional-grade products and techniques to ensure your vehicle receives the best care possible."
@@ -102,10 +104,7 @@ export default function Home() {
         overlayOpacity="0.7"
       />
       
-      <SectionDivider />
-      <LoyaltyRewards />
-      <SectionDivider />
-      <PricingCalculator />
+  {/* LoyaltyRewards and PricingCalculator sections removed per request */}
     </>
   );
 }

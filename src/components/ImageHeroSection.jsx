@@ -2,10 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, Sparkles } from 'lucide-react';
 import BlurText from './ui/BlurText';
+import ThemeImage from './ThemeImage';
 import TextType from './ui/TextType';
 
 const ImageHeroSection = ({ 
   image, 
+  imageLight,
   title, 
   subtitle, 
   description, 
@@ -19,10 +21,12 @@ const ImageHeroSection = ({
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={image}
+        <ThemeImage
+          base={image}
+          srcLight={imageLight}
           alt={title}
-          className="w-full h-full object-cover"
+          className="w-full h-full"
+          imgStyle={{ transition: 'opacity 0.6s ease' }}
         />
         {/* Multi-layered Gradients */}
         <div 

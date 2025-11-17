@@ -5,6 +5,67 @@ import { MoveRight, PhoneCall, Star, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 // Removed AnimatedText for hero tagline; using shiny-text effect instead
 
+/**
+ * Theme-aware hero image: switches between /img/hero.jpg (dark) and /img/hero2.jpg (light)
+ * Smooth crossfade and preloads the incoming image.
+ */
+function ThemeHeroImage() {
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('theme') || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    } catch (e) {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+  });
+
+  const pickSrc = (t) => (t === 'light' ? '/img/hero2.jpg' : '/img/hero.jpg');
+
+  const [currentSrc, setCurrentSrc] = useState(() => pickSrc(theme));
+  const [prevSrc, setPrevSrc] = useState(null);
+  const [transitioning, setTransitioning] = useState(false);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const t = e?.detail || (localStorage.getItem('theme') || (document.documentElement.classList.contains('dark') ? 'dark' : 'light'));
+      if (!t) return;
+      if (t === theme) return;
+      const next = pickSrc(t);
+      // preload
+      const img = new Image();
+      img.src = next;
+      img.onload = () => {
+        setPrevSrc(currentSrc);
+        setCurrentSrc(next);
+        setTransitioning(true);
+        setTimeout(() => {
+          setPrevSrc(null);
+          setTransitioning(false);
+        }, 500); // match CSS transition duration
+      };
+      setTheme(t);
+    };
+
+    window.addEventListener('theme-change', handler);
+    return () => window.removeEventListener('theme-change', handler);
+  }, [theme, currentSrc]);
+
+  // Ensure initial preload of currentSrc
+  useEffect(() => {
+    const img = new Image(); img.src = currentSrc;
+  }, []);
+
+  return (
+    <div className="absolute inset-0 w-full h-full z-0">
+      {prevSrc && (
+        <img src={prevSrc} alt="hero previous" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`} aria-hidden />
+      )}
+      {currentSrc && (
+        <img src={currentSrc} alt="Hero" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${transitioning ? 'opacity-100' : 'opacity-100'}`} />
+      )}
+    </div>
+  );
+}
+
 const Hero = () => {
   const navigate = useNavigate();
   const [titleNumber, setTitleNumber] = useState(0);
@@ -32,11 +93,7 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-0 bg-black">
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="/img/hero.jpg"
-          alt="Premium car detailing"
-          className="w-full h-full object-cover"
-        />
+        <ThemeHeroImage />
         {/* Mesmerizing Multi-layered Gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60"></div>

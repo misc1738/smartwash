@@ -2,6 +2,7 @@ import { Sparkles, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin }
 import { useNavigate } from 'react-router-dom';
 import navigateToHash from '../utils/scrollToHash';
 import AnimatedBrandButton from './ui/AnimatedBrandButton';
+import ThemeImage from './ThemeImage';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -12,14 +13,7 @@ export default function Footer() {
     <footer id="contact" className="relative mt-auto bg-black text-white overflow-hidden">
       {/* Background Image Overlay */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <img 
-          src="/img/pexels-karola-g-4870727.jpg"
-          alt="Footer background"
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.src = "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80";
-          }}
-        />
+  <ThemeImage base="/img/pexels-karola-g-4870727.jpg" srcLight="/img/pexels-karola-g-4870724.jpg" alt="Footer background" className="w-full h-full" fallback="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-black/80"></div>
       </div>
 

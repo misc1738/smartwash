@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import ThemeImage from '../components/ThemeImage';
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Sparkles, Check } from 'lucide-react';
 
 export default function Signup() {
@@ -42,14 +43,10 @@ export default function Signup() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden relative">
       {/* Static Background */}
       <div className="absolute inset-0">
-        <img 
-          src="/img/pexels-kublackphotography-9197708.jpg"
-          alt="Signup background"
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.src = "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1920&q=80";
-          }}
-        />
+        {/* Theme-aware background image: expects pexels-kublackphotography-9197708.jpg and pexels-kublackphotography-9197708-light.jpg */}
+        <div className="w-full h-full">
+          <ThemeImage base="/img/pexels-kublackphotography-9197708.jpg" srcLight="/img/carwash-light.jpg" alt="Signup background" className="w-full h-full" fallback="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1920&q=80" />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70"></div>
       </div>
 

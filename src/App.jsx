@@ -50,6 +50,8 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-black relative overflow-x-hidden">
+      {/* ARIA live region for theme change announcements (screen readers) */}
+      <div id="theme-announcer" aria-live="polite" className="sr-only" />
       {!isAuthPage && mounted && showVisuals && (
         <>
           <Suspense fallback={null}>

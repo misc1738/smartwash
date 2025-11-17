@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Star, Quote } from "lucide-react";
+import ThemeImage from './ThemeImage';
 
 const testimonials = [
   {
@@ -44,17 +45,10 @@ const Testimonials = () => {
 
   return (
   <section className="relative py-32 bg-black overflow-hidden content-visibility-auto" onKeyDown={onKeyDown}>
-    {/* Background with subtle image */}
+      {/* Background with subtle image */}
       {/* Background Image */}
       <div className="absolute inset-0 opacity-10">
-        <img 
-          src="/img/pexels-tima-miroshnichenko-6872150.jpg"
-          alt="Testimonials background"
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.src = "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80";
-          }}
-        />
+  <ThemeImage base="/img/pexels-tima-miroshnichenko-6872150.jpg" srcLight="/img/pexels-tima-miroshnichenko-6872146.jpg" alt="Testimonials background" className="w-full h-full" fallback="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&q=80" />
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black"></div>
       </div>    {/* Accent Glows */}
     <div className="absolute inset-0 opacity-20 pointer-events-none">
