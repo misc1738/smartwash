@@ -125,9 +125,25 @@ class MpesaService {
         }
       );
 
+      // Daraja returns a ResponseCode (string/number) indicating immediate acceptance.
+      // Treat only ResponseCode === '0' (or 0) as an accepted request. Otherwise surface the provider response as an error.
+      const resp = response.data || {};
+      const responseCode = resp.ResponseCode ?? resp.responseCode ?? resp.Response?.ResultCode ?? resp.Result?.ResultCode;
+
+      if (responseCode === '0' || responseCode === 0) {
+        return {
+          success: true,
+          data: resp,
+        };
+      }
+
+      // Not accepted by Daraja
       return {
-        success: true,
-        data: response.data,
+        success: false,
+        error: {
+          message: resp.ResponseDescription || resp.ResponseDesc || resp.ResultDesc || 'STK Push not accepted by provider',
+          raw: resp,
+        },
       };
     } catch (error) {
       console.error('STK Push Error:', error.response?.data || error.message);

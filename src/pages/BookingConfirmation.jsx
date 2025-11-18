@@ -56,8 +56,16 @@ export default function BookingConfirmation() {
   const selectedService = services[booking.service] || services.express;
 
   const doPay = async () => {
-    const updated = await bookingsService.pay(booking.id, 'mpesa');
-    setBooking(updated);
+    // Redirect to the M-Pesa payment flow so the customer can complete STK Push
+    // The payment page will mark the booking as paid once the STK push completes.
+    try {
+      const params = { booking };
+      // Navigate to the /mpesa-test route which hosts the payment component
+      navigate('/mpesa-test', { state: params });
+    } catch (err) {
+      console.error('Failed to start payment flow', err);
+      alert('Failed to start payment flow');
+    }
   };
 
   const handleDownloadReceipt = async () => {

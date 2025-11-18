@@ -79,6 +79,12 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
       });
     }
 
+    // Ensure a callback URL is configured on the server so Daraja can POST results back.
+    if (!mpesaService.callbackUrl) {
+      // Continue to attempt the STK push (Daraja can be polled), but warn the developer.
+      console.warn('MPESA_CALLBACK_URL is not set. Daraja callbacks will not be received unless a public callback is configured. Polling must be used to verify payment.');
+    }
+
     const result = await mpesaService.initiateSTKPush(
       phoneNumber,
       amount,
@@ -86,6 +92,7 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
       transactionDesc || 'SmartWash Payment'
     );
 
+    // Return the raw result from the service (which will include success:false if provider rejected)
     res.json(result);
   } catch (error) {
     res.status(500).json({ success: false, error: String(error) });

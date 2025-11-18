@@ -1,16 +1,20 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import MpesaPayment from './MpesaPayment';
+import bookingsService from '../mocks/bookingsService';
 
 /**
  * Example component showing how to integrate M-Pesa payment
  * You can copy this pattern into your booking flow
  */
 const MpesaPaymentExample = () => {
-  const [showPayment, setShowPayment] = useState(false);
+  const location = useLocation();
+  const redirectedBooking = location.state?.booking || null;
+  const [showPayment, setShowPayment] = useState(Boolean(redirectedBooking));
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   
   // Example booking details
-  const bookingDetails = {
+  const bookingDetails = redirectedBooking || {
     service: 'Premium Wash',
     vehicle: 'Toyota Corolla',
     amount: 1500,
@@ -27,6 +31,13 @@ const MpesaPaymentExample = () => {
     // TODO: Send confirmation email/SMS
     // TODO: Redirect to success page
     
+    // If this was a redirected booking, mark it as paid in the (mock) bookings service
+    try {
+      if (redirectedBooking && redirectedBooking.id) {
+        bookingsService.pay(redirectedBooking.id, 'mpesa').catch(() => {});
+      }
+    } catch (_) {}
+
     alert('Payment successful! Your booking is confirmed.');
   };
 
