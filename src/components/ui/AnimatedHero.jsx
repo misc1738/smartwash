@@ -28,11 +28,7 @@ function AnimatedHero() {
       
       <div className="container mx-auto relative z-10">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
-          <div>
-            <Button variant="secondary" size="sm" className="gap-4">
-              Book Your First Wash Free <MoveRight className="w-4 h-4" />
-            </Button>
-          </div>
+          {/* Promotional badge removed: 'Book Your First Wash Free' */}
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
               <span className="text-white/90">Experience</span>

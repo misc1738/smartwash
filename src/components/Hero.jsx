@@ -175,45 +175,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex gap-6 sm:gap-8 py-16 sm:py-20 lg:py-40 items-center justify-center flex-col">
           
-          {/* Premium Badge with shimmer effect */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <motion.div
-              animate={{
-                boxShadow: [
-                  "0 0 20px rgba(44, 155, 239, 0.3)",
-                  "0 0 40px rgba(44, 155, 239, 0.6)",
-                  "0 0 20px rgba(44, 155, 239, 0.3)",
-                ],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <Button variant="secondary" size="sm" className="gap-4 relative overflow-hidden group">
-                <span className="relative z-10">Book Your First Wash Free</span>
-                <MoveRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
-                {/* Shimmer effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  animate={{
-                    x: ["-100%", "200%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    repeatDelay: 2,
-                  }}
-                />
-              </Button>
-            </motion.div>
-          </motion.div>
+          {/* Removed promotional badge (Book Your First Wash Free) as requested */}
 
           {/* Main Title with Animated Words */}
           <div className="flex gap-4 flex-col">

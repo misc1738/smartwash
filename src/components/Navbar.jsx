@@ -38,9 +38,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled ? 'bg-black/50 border-b border-white/10 shadow-2xl shadow-black/50 backdrop-blur-sm' : 'bg-transparent border-b border-transparent backdrop-blur-0'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${'bg-transparent border-b border-transparent backdrop-blur-0 shadow-none'}`}>
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`transition-all duration-500 ${scrolled ? 'my-2 bg-white/5 rounded-2xl p-2 shadow-xl' : 'my-0 bg-transparent p-2'}`}>
+  <div className={`transition-all duration-500 ${scrolled ? 'my-2 bg-transparent rounded-2xl p-2 shadow-none' : 'my-0 bg-transparent p-2'}`}>
                     <div className="flex items-center justify-between px-4 py-3">
             {/* Logo with Animated Button */}
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
@@ -48,7 +48,7 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Navigation - Transparent at top; subtle glass when scrolled */}
-            <div className={`hidden md:flex items-center gap-2 p-1.5 rounded-full border ${scrolled ? 'bg-black/10 border-white/10 backdrop-blur-md' : 'bg-transparent border-transparent backdrop-blur-0'}`}>
+            <div className={`hidden md:flex items-center gap-2 p-1.5 rounded-full border ${'bg-transparent border-transparent backdrop-blur-0'}`}>
               {navItems.map((item) => (
                 <button
                   key={item.id}

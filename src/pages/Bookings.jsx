@@ -222,7 +222,7 @@ export default function Bookings() {
             <div className="text-center py-20 bg-black/20 border border-white/10 backdrop-blur-sm">
               <Calendar className="w-16 h-16 text-white/20 mx-auto mb-4" />
               <p className="text-white/60 text-lg">No bookings yet.</p>
-              <p className="text-white/40 text-sm mt-2">Book your first service above to get started!</p>
+              <p className="text-white/40 text-sm mt-2">Get started by booking a service above.</p>
             </div>
           ) : filteredList.length === 0 ? (
             <div className="text-center py-20 bg-black/20 border border-white/10 backdrop-blur-sm">
