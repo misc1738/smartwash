@@ -68,75 +68,94 @@ body {
 
 /* Dark theme variables (activated by adding 'dark' class on <html> or <body>) */
 :root.dark {
-  --background: 215 25% 7%; /* Dark Blue-Gray */
-  --foreground: 0 0% 100%;
+  /* Cold theme (exact swatches mapped left->right of the provided palette)
+     Mapping:
+       swatch1 (pale aqua)  -> used for 'foreground' (light text on dark bg)
+       swatch2 (cyan)       -> primary
+       swatch3 (sky blue)   -> accent
+       swatch4 (lighter blue)-> secondary
+       swatch5 (deep blue)  -> background
+  */
+  --background: 248 95% 16%; /* deep navy (swatch5) */
+  --foreground: 180 100% 93%; /* pale aqua (swatch1) */
 
-  --card: 215 25% 11%; /* Dark Blue-Gray Card */
-  --card-foreground: 0 0% 100%;
+  --card: 248 95% 20%;
+  --card-foreground: 180 100% 93%;
 
-  --primary: 204 88% 53%; /* Beautiful Blue */
-  --primary-foreground: 0 0% 100%;
-  --primary-light: 204 88% 63%;
-  --primary-glow: 204 88% 73%;
-  
-  --accent: 43 96% 56%; /* Warm Gold */
-  --accent-foreground: 0 0% 0%;
+  /* Primary: cyan (swatch2) */
+  --primary: 187 87% 55%;
+  --primary-foreground: 240 100% 6%;
+  --primary-light: 187 87% 65%;
+  --primary-glow: 187 87% 75%;
 
-  --secondary: 215 25% 16%;
-  --secondary-foreground: 0 0% 100%;
+  /* Accent: sky blue (swatch3) */
+  --accent: 210 100% 70%;
+  --accent-foreground: 240 100% 6%;
 
-  --muted: 215 16% 43%;
-  --muted-foreground: 215 14% 62%;
+  --secondary: 215 90% 66%;
+  --secondary-foreground: 180 100% 93%;
 
-  --destructive: 0 80% 60%;
-  --destructive-foreground: 0 0% 100%;
-
-  --border: 215 20% 28%;
-  --input: 215 20% 28%;
-  --ring: 204 88% 53%;
-
-  --gradient-hero: linear-gradient(135deg, hsl(215, 25%, 7%) 0%, hsl(215, 25%, 15%) 100%);
-  --gradient-card: linear-gradient(180deg, hsl(215, 25%, 11%) 0%, hsl(215, 25%, 7%) 100%);
-
-  --shadow-soft: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
-  --shadow-hover: 0 30px 60px -15px rgba(44, 155, 239, 0.3);
-}
-
-/* Light theme variables (activated by adding 'light' class on <html> or <body>) */
-:root.light {
-  --background: 42 95% 98%; /* warm off-white */
-  --foreground: 21 14% 12%; /* near black for text */
-
-  --card: 0 0% 100%;
-  --card-foreground: 21 14% 12%;
-
-  /* Shift primary and accent to warm orange palette */
-  --primary: 24 100% 50%; /* warm orange */
-  --primary-foreground: 0 0% 100%;
-  --primary-light: 24 100% 60%;
-  --primary-glow: 24 100% 70%;
-  
-  --accent: 24 100% 50%; /* same orange accent */
-  --accent-foreground: 0 0% 100%;
-
-  --secondary: 32 20% 30%;
-  --secondary-foreground: 0 0% 100%;
-
-  --muted: 30 20% 70%;
-  --muted-foreground: 30 14% 40%;
+  --muted: 210 30% 40%;
+  --muted-foreground: 210 20% 70%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 0 0% 92%;
-  --input: 0 0% 96%;
-  --ring: 24 100% 50%;
+  --border: 248 40% 18%;
+  --input: 248 40% 18%;
+  --ring: 187 87% 55%;
 
-  --gradient-hero: linear-gradient(135deg, hsl(24, 100%, 98%) 0%, hsl(24, 100%, 90%) 100%);
-  --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
+  --gradient-hero: linear-gradient(135deg, hsl(248,95%,16%) 0%, hsl(210,100%,70%) 100%);
+  --gradient-card: linear-gradient(180deg, hsl(248,95%,20%) 0%, hsl(248,95%,16%) 100%);
 
-  --shadow-soft: 0 12px 40px -8px rgba(255, 165, 64, 0.08);
-  --shadow-hover: 0 14px 48px -10px rgba(255, 165, 64, 0.12);
+  --shadow-soft: 0 20px 40px -12px rgba(2, 8, 23, 0.6);
+  --shadow-hover: 0 30px 60px -15px rgba(45, 229, 245, 0.12);
+}
+
+/* Light theme variables (activated by adding 'light' class on <html> or <body>) */
+:root.light {
+  /* Warm theme (exact swatches mapped left->right of the provided palette)
+     Mapping:
+       swatch1 (pale pink)  -> background
+       swatch2 (orange)     -> primary
+       swatch3 (magenta)    -> accent
+       swatch4 (deep pink)  -> secondary
+       swatch5 (deep maroon) -> foreground
+  */
+  --background: 0 65% 94%; /* pale warm pink (swatch1) */
+  --foreground: 350 66% 17%; /* deep maroon (swatch5) */
+
+  --card: 0 0% 100%;
+  --card-foreground: 350 66% 17%;
+
+  /* Primary: orange (swatch2) */
+  --primary: 27 87% 53%;
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 27 87% 63%;
+  --primary-glow: 27 87% 73%;
+
+  /* Accent: magenta (swatch3) */
+  --accent: 346 58% 45%;
+  --accent-foreground: 0 0% 100%;
+
+  --secondary: 350 66% 12%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 12 40% 75%;
+  --muted-foreground: 12 30% 40%;
+
+  --destructive: 354 65% 45%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 94%;
+  --input: 0 0% 98%;
+  --ring: 27 87% 53%;
+
+  --gradient-hero: linear-gradient(135deg, hsl(0,65%,94%) 0%, hsl(27,87%,53%) 100%);
+  --gradient-card: linear-gradient(180deg, hsl(0,0%,100%) 0%, hsl(0,0%,98%) 100%);
+
+  --shadow-soft: 0 12px 40px -8px rgba(245, 124, 32, 0.08);
+  --shadow-hover: 0 14px 48px -10px rgba(245, 124, 32, 0.12);
 }
 
 /* Animation for mobile menu */
