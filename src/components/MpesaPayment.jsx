@@ -11,19 +11,19 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
   // Format phone number as user types
   const handlePhoneChange = (e) => {
     let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
-    
+
     // Limit to 12 digits (254XXXXXXXXX)
     if (value.length > 12) {
       value = value.slice(0, 12);
     }
-    
+
     // Auto-add 254 prefix if user starts with 0 or 7
     if (value.startsWith('0')) {
       value = '254' + value.slice(1);
     } else if (value.startsWith('7') && !value.startsWith('254')) {
       value = '254' + value;
     }
-    
+
     setPhoneNumber(value);
   };
 
@@ -160,7 +160,7 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
             <div className="flex justify-between items-center">
               <span className="text-gray-600 dark:text-gray-300">Amount to Pay:</span>
               <span className="text-2xl font-bold text-green-600">
-                KES {amount.toLocaleString()}
+                KES {(amount || 0).toLocaleString()}
               </span>
             </div>
           </div>

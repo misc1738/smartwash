@@ -34,7 +34,7 @@ export default function BookingWizard({ onClose }) {
     const handleBook = () => {
         // In a real app, submit to backend here
         console.log('Booking submitted:', booking);
-        navigate('/booking-confirmation', { state: { booking } });
+        navigate('/booking-confirmation', { state: { booking: { ...booking, totalPrice: total } } });
         if (onClose) onClose();
     };
 
@@ -126,8 +126,8 @@ export default function BookingWizard({ onClose }) {
                                             key={v.id}
                                             onClick={() => setBooking({ ...booking, vehicle: v })}
                                             className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${booking.vehicle?.id === v.id
-                                                    ? 'border-primary bg-primary/10 text-primary'
-                                                    : 'border-foreground/10 hover:border-primary/50'
+                                                ? 'border-primary bg-primary/10 text-primary'
+                                                : 'border-foreground/10 hover:border-primary/50'
                                                 }`}
                                         >
                                             <div className={`p-3 rounded-full ${booking.vehicle?.id === v.id ? 'bg-primary text-white' : 'bg-foreground/5 text-foreground'}`}>
@@ -168,8 +168,8 @@ export default function BookingWizard({ onClose }) {
                                             key={p.id}
                                             onClick={() => setBooking({ ...booking, package: p })}
                                             className={`text-left p-6 rounded-xl border transition-all ${booking.package?.id === p.id
-                                                    ? 'border-primary bg-primary/10'
-                                                    : 'border-foreground/10 hover:border-primary/50'
+                                                ? 'border-primary bg-primary/10'
+                                                : 'border-foreground/10 hover:border-primary/50'
                                                 }`}
                                         >
                                             <div className="flex justify-between items-start mb-2">

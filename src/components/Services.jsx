@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, createRef } from 'react';
 import BookingWizard from './BookingWizard';
 import ThemeImage from './ThemeImage';
 import GlowingEffect from './ui/GlowingEffect';
+import MagneticButton from './ui/MagneticButton';
 
 const services = [
   {
@@ -349,14 +350,15 @@ export default function Services() {
                     <span className="text-sm text-foreground/50">/service</span>
                   </div>
 
-                  <button
-                    onClick={() => handleSelect(service.key)}
-                    data-magnetic
-                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 transition-all duration-300 flex items-center justify-between group/btn uppercase tracking-[0.15em] text-sm shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 rounded-lg"
-                  >
-                    <span>Book Now</span>
-                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform duration-300" />
-                  </button>
+                  <MagneticButton>
+                    <button
+                      onClick={() => handleSelect(service.key)}
+                      className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 transition-all duration-300 flex items-center justify-between group/btn uppercase tracking-[0.15em] text-sm shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 rounded-lg"
+                    >
+                      <span>Book Now</span>
+                      <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform duration-300" />
+                    </button>
+                  </MagneticButton>
                 </div>
               </div>
             </div>
