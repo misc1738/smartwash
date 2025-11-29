@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, ArrowRight, Sparkles, Shield, Droplet, Star } from 'lucide-react';
+import { Check, ArrowRight, Sparkles, Shield, Droplet, Star, Play } from 'lucide-react';
 import BlurText from '../components/ui/BlurText';
 import AnimatedText from '../components/ui/AnimatedText';
 import BookingDrawer from '../components/BookingDrawer';
@@ -21,6 +21,7 @@ const services = [
       'Quick dry',
     ],
     popular: false,
+    video: '/videos/express.mp4' // Placeholder
   },
   {
     key: 'premium',
@@ -38,6 +39,7 @@ const services = [
       'Air freshener',
     ],
     popular: true,
+    video: '/videos/premium.mp4' // Placeholder
   },
   {
     key: 'ultimate',
@@ -56,6 +58,7 @@ const services = [
       'Headlight restoration',
     ],
     popular: false,
+    video: '/videos/ultimate.mp4' // Placeholder
   },
   {
     key: 'interior',
@@ -73,6 +76,7 @@ const services = [
       'Odor elimination',
     ],
     popular: false,
+    video: '/videos/interior.mp4' // Placeholder
   },
 ];
 
@@ -87,45 +91,35 @@ export default function Services() {
   };
 
   return (
-    <div className="min-h-screen relative">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black"></div>
-        <img 
-          src="https://images.pexels.com/photos/4870663/pexels-photo-4870663.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Services background"
-          className="w-full h-full object-cover opacity-10"
-        />
+    <div className="min-h-screen relative bg-background transition-colors duration-500 pt-24">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-primary-light/10 rounded-full blur-[100px]"
+          style={{ animation: 'float 8s ease-in-out infinite' }} />
       </div>
 
-      {/* Animated Orbs */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-3xl" 
-             style={{ animation: 'float 8s ease-in-out infinite' }} />
-      </div>
-
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-primary/20 border border-primary/30 text-primary font-bold uppercase tracking-widest text-xs backdrop-blur-sm mb-6">
+          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 text-primary font-bold uppercase tracking-widest text-xs backdrop-blur-sm mb-6 rounded-full">
             Our Services
           </div>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6">
-            <BlurText 
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-foreground mb-6">
+            <BlurText
               text="Choose Your"
               delay={40}
               animateBy="words"
-              className="block text-white"
+              className="block text-foreground"
             />
-            <BlurText 
+            <BlurText
               text="Perfect Service"
               delay={40}
               animateBy="words"
-              className="block bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent"
+              className="block bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent"
             />
           </h1>
-          <div className="text-xl text-white/70 max-w-2xl mx-auto flex justify-center">
+          <div className="text-xl text-foreground/70 max-w-2xl mx-auto flex justify-center font-light">
             <AnimatedText
               text="Professional mobile detailing tailored to your vehicle's needs"
               animationType="wave"
@@ -144,43 +138,44 @@ export default function Services() {
             return (
               <div
                 key={service.key}
-                className={`group relative bg-black/40 border backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
-                  service.popular 
-                    ? 'border-primary/50 shadow-xl shadow-primary/20' 
-                    : 'border-white/10 hover:border-primary/30 hover:shadow-primary/10'
-                }`}
+                className={`group relative glass-luxury rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl overflow-hidden ${service.popular
+                    ? 'border-primary/50 shadow-lg shadow-primary/10'
+                    : 'hover:border-primary/30'
+                  }`}
                 style={{
                   animation: `fade-in-up 0.8s ease-out ${index * 0.1}s both`
                 }}
               >
+                {/* Video Preview Overlay (Placeholder) */}
+                <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0" />
+
                 {/* Popular Badge */}
                 {service.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-cyan-500 text-white text-xs font-bold uppercase tracking-wider">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-primary-light text-primary-foreground text-xs font-bold uppercase tracking-wider rounded-b-lg z-20 shadow-lg">
                     Most Popular
                   </div>
                 )}
 
-                <div className="p-8 flex flex-col h-full">
+                <div className="p-8 flex flex-col h-full relative z-10">
                   {/* Icon */}
                   <div className="mb-6">
-                    <div className={`inline-flex p-4 rounded-full ${
-                      service.popular 
-                        ? 'bg-primary/20 border border-primary/30' 
-                        : 'bg-white/5 border border-white/10'
-                    }`}>
-                      <Icon className={`w-8 h-8 ${service.popular ? 'text-primary' : 'text-cyan-400'}`} />
+                    <div className={`inline-flex p-4 rounded-full transition-colors duration-300 ${service.popular
+                        ? 'bg-primary/20 border border-primary/30'
+                        : 'bg-foreground/5 border border-foreground/10 group-hover:bg-primary/10 group-hover:border-primary/20'
+                      }`}>
+                      <Icon className={`w-8 h-8 ${service.popular ? 'text-primary' : 'text-foreground/70 group-hover:text-primary'}`} />
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="flex-1">
-                    <h3 className="text-2xl font-black text-white mb-2">{service.title}</h3>
-                    <p className="text-white/60 text-sm mb-6">{service.description}</p>
+                    <h3 className="text-2xl font-serif font-bold text-foreground mb-2">{service.title}</h3>
+                    <p className="text-foreground/60 text-sm mb-6">{service.description}</p>
 
                     {/* Pricing */}
-                    <div className="mb-6 pb-6 border-b border-white/10">
-                      <div className="text-4xl font-black text-primary mb-1">{service.price}</div>
-                      <div className="text-white/50 text-sm">{service.duration}</div>
+                    <div className="mb-6 pb-6 border-b border-foreground/10">
+                      <div className="text-4xl font-bold text-primary mb-1">{service.price}</div>
+                      <div className="text-foreground/50 text-sm">{service.duration}</div>
                     </div>
 
                     {/* Features */}
@@ -188,7 +183,7 @@ export default function Services() {
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start gap-3 text-sm">
                           <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-white/80">{feature}</span>
+                          <span className="text-foreground/80">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -197,11 +192,10 @@ export default function Services() {
                   {/* CTA Button */}
                   <button
                     onClick={() => handleBookNow(service)}
-                    className={`group/btn w-full py-4 font-bold uppercase tracking-wider text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
-                      service.popular
-                        ? 'bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-white shadow-lg shadow-primary/30'
-                        : 'bg-white/5 border border-white/10 text-white hover:border-primary/50 hover:bg-primary/10'
-                    }`}
+                    className={`group/btn w-full py-4 font-bold uppercase tracking-wider text-sm transition-all duration-300 flex items-center justify-center gap-2 rounded-xl ${service.popular
+                        ? 'bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary text-primary-foreground shadow-lg shadow-primary/20'
+                        : 'bg-foreground/5 border border-foreground/10 text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary'
+                      }`}
                   >
                     <span>Book Now</span>
                     <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -214,19 +208,19 @@ export default function Services() {
 
         {/* Additional Info */}
         <div className="mt-20 max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-primary/20 to-cyan-500/20 border border-primary/30 backdrop-blur-xl p-8 md:p-12">
+          <div className="glass-luxury rounded-2xl p-8 md:p-12 border border-primary/20">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
-                <div className="text-4xl font-black text-white mb-2">100%</div>
-                <div className="text-white/60">Satisfaction Guaranteed</div>
+                <div className="text-4xl font-bold text-primary mb-2">100%</div>
+                <div className="text-foreground/60">Satisfaction Guaranteed</div>
               </div>
               <div>
-                <div className="text-4xl font-black text-white mb-2">24/7</div>
-                <div className="text-white/60">Customer Support</div>
+                <div className="text-4xl font-bold text-primary mb-2">24/7</div>
+                <div className="text-foreground/60">Customer Support</div>
               </div>
               <div>
-                <div className="text-4xl font-black text-white mb-2">Free</div>
-                <div className="text-white/60">Rescheduling</div>
+                <div className="text-4xl font-bold text-primary mb-2">Free</div>
+                <div className="text-foreground/60">Rescheduling</div>
               </div>
             </div>
           </div>
@@ -234,7 +228,7 @@ export default function Services() {
       </div>
 
       {/* Booking Drawer */}
-      <BookingDrawer 
+      <BookingDrawer
         open={drawerOpen}
         onClose={(booking) => {
           setDrawerOpen(false);

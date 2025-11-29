@@ -7,16 +7,17 @@ import About from "../components/About";
 import Services from "../components/Services";
 import BookingCalendar from "../components/BookingCalendar";
 import Marquee from "../components/Marquee";
+import Testimonials from "../components/Testimonials";
 import SectionDivider from "../components/ui/SectionDivider";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      
+
       <SectionDivider />
       <BookingCalendar />
-      
+
       {/* Image Hero Section 3 - Mobile Convenience with Typing Effect */}
       <ImageHeroSection
         image="/img/pexels-sarmad-mughal-94606-305070.jpg"
@@ -45,7 +46,7 @@ export default function Home() {
           "Anywhere in Nairobi"
         ]}
       />
-      
+
       {/* Image Hero Section 1 - Premium Service */}
       <ImageHeroSection
         image="/img/pexels-karola-g-4870724.jpg"
@@ -61,9 +62,9 @@ export default function Home() {
         ]}
         align="center"
       />
-      
+
       <HeroScrollSection />
-      
+
       {/* Image Hero Section 2 - Eco-Friendly */}
       <ImageHeroSection
         image="/img/pexels-kopriva.jpg"
@@ -79,15 +80,17 @@ export default function Home() {
         align="left"
         overlayOpacity="0.75"
       />
-      
+
       <SectionDivider />
       <About />
       <SectionDivider />
+      <Testimonials />
+      <SectionDivider />
       <Marquee />
-      
-  <SectionDivider />
-  <Services />
-  <SectionDivider />
+
+      <SectionDivider />
+      <Services />
+      <SectionDivider />
       <ServiceShowcase />
       <ImageHeroSection
         image="/img/pexels-karola-g-4870700.jpg"
@@ -103,8 +106,8 @@ export default function Home() {
         align="center"
         overlayOpacity="0.7"
       />
-      
-  {/* LoyaltyRewards and PricingCalculator sections removed per request */}
+
+      {/* LoyaltyRewards and PricingCalculator sections removed per request */}
     </>
   );
 }

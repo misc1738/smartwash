@@ -8,6 +8,10 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Cormorant Garamond', 'serif'],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -25,13 +29,17 @@ export default {
         "accent-foreground": "hsl(var(--accent-foreground))",
         destructive: "hsl(var(--destructive))",
         "destructive-foreground": "hsl(var(--destructive-foreground))",
-        glass: "rgba(255, 255, 255, 0.1)",
-        "glass-border": "rgba(255, 255, 255, 0.15)",
-        "neon-yellow": "#DFFF00",
-        "bg-light": "#FFFFFF",
-        "bg-dark": "#111111",
-        "surface-light": "#F5F5F5",
-        "surface-dark": "#1C1C1C",
+        glass: "rgba(10, 10, 10, 0.6)",
+        "glass-border": "rgba(212, 175, 55, 0.2)",
+        gold: {
+          100: "#F9F1D8",
+          200: "#F0DEAA",
+          300: "#E6CB7D",
+          400: "#D4AF37", // Base Gold
+          500: "#AA8C2C",
+          600: "#806921",
+          700: "#554616",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -39,12 +47,13 @@ export default {
       boxShadow: {
         soft: "var(--shadow-soft)",
         hover: "var(--shadow-hover)",
+        glow: "0 0 20px rgba(212, 175, 55, 0.3)",
       },
       backgroundImage: {
         "gradient-hero": "var(--gradient-hero)",
         "gradient-card": "var(--gradient-card)",
-        "gradient-radial": "radial-gradient(circle at center, var(--tw-gradient-stops))",
-        "gradient-spotlight": "radial-gradient(circle at 50% 0%, var(--tw-gradient-stops))",
+        "gradient-gold": "linear-gradient(135deg, #F0DEAA 0%, #D4AF37 50%, #AA8C2C 100%)",
+        "gradient-dark": "linear-gradient(180deg, rgba(10,10,10,0) 0%, #0a0a0a 100%)",
       },
       backdropBlur: {
         xs: '2px',

@@ -24,7 +24,7 @@ const ParticleField = lazy(() => import('./components/ui/ParticleField'));
 
 function App() {
   const location = useLocation();
-  
+
   // Pages that should not show navbar and footer
   const authPages = ['/login', '/signup'];
   const isAuthPage = authPages.includes(location.pathname);
@@ -77,15 +77,15 @@ function App() {
           </ErrorBoundary>
         </Suspense>
       )}
-      
+
       {!isAuthPage && (
         <>
           <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white p-2 rounded shadow-lg">Skip to content</a>
           <Navbar />
         </>
       )}
-      
-      <main id="main-content" role="main" className={!isAuthPage ? "flex-grow pt-24" : "flex-grow"}>
+
+      <main id="main-content" role="main" className={!isAuthPage && location.pathname !== '/' ? "flex-grow pt-24" : "flex-grow"}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<RequireAuth><Services /></RequireAuth>} />
@@ -98,7 +98,7 @@ function App() {
           <Route path="/mpesa-test" element={<MpesaTestPage />} />
         </Routes>
       </main>
-      
+
       {!isAuthPage && <Footer />}
       <Analytics />
     </div>

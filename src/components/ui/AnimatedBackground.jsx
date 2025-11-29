@@ -10,70 +10,73 @@ export default function AnimatedBackground() {
 
   try {
     return (
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* Animated gradient orbs */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-background transition-colors duration-500">
+        {/* Animated gradient orbs - Adapts to Theme (Gold or Red) */}
         <motion.div
-          className="absolute top-1/4 -left-48 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+          className="absolute top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-[100px]"
           animate={{
             x: [0, 100, 0],
             y: [0, 50, 0],
             scale: [1, 1.2, 1],
+            opacity: [0.1, 0.2, 0.1],
           }}
           transition={{
-            duration: 20,
+            duration: 25,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
         <motion.div
-          className="absolute top-1/3 -right-48 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
+          className="absolute top-1/3 -right-48 w-96 h-96 bg-primary-light/10 rounded-full blur-[100px]"
           animate={{
             x: [0, -100, 0],
             y: [0, -50, 0],
             scale: [1, 1.3, 1],
+            opacity: [0.1, 0.2, 0.1],
           }}
           transition={{
-            duration: 25,
+            duration: 30,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 2
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl"
+          className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-foreground/5 rounded-full blur-[100px]"
           animate={{
             x: [0, 50, 0],
             y: [0, 100, 0],
             scale: [1, 1.4, 1],
+            opacity: [0.05, 0.1, 0.05],
           }}
           transition={{
-            duration: 30,
+            duration: 35,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 5
           }}
         />
-        
-        {/* Grid pattern overlay */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]"
+
+        {/* Subtle Grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `
-              linear-gradient(to right, white 1px, transparent 1px),
-              linear-gradient(to bottom, white 1px, transparent 1px)
+              linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px),
+              linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)
             `,
-            backgroundSize: '80px 80px',
+            backgroundSize: '100px 100px',
           }}
         />
-        
-        {/* Scanning line effect */}
+
+        {/* Scanning line effect - Subtle Primary Color */}
         <motion.div
-          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
           animate={{
             top: ['0%', '100%'],
           }}
           transition={{
-            duration: 8,
+            duration: 15,
             repeat: Infinity,
             ease: "linear"
           }}

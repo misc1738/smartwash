@@ -8,62 +8,62 @@ import TextType from './ui/TextType';
 const About = () => {
   const navigate = useNavigate();
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background transition-colors duration-500">
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img 
+      <div className="absolute inset-0 z-0">
+        <img
           src="https://images.pexels.com/photos/6872609/pexels-photo-6872609.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Professional car wash"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-20 dark:opacity-40 transition-opacity duration-500"
           onError={(e) => {
             e.target.src = "https://images.pexels.com/photos/3354647/pexels-photo-3354647.jpeg?auto=compress&cs=tinysrgb&w=1920";
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/70"></div>
       </div>
 
       {/* Animated Gradient Orbs */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary/40 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-cyan-500/30 rounded-full blur-3xl" 
-             style={{ animation: 'float 8s ease-in-out infinite' }} />
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-primary-light/10 rounded-full blur-3xl"
+          style={{ animation: 'float 8s ease-in-out infinite' }} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 sm:py-20 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center max-w-7xl mx-auto">
-          
+
           {/* Left Content */}
           <div className="space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <div className="inline-block">
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/20 border border-primary/30 text-primary font-bold uppercase tracking-widest text-xs backdrop-blur-sm">
+                <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 border border-primary/20 text-primary font-serif font-bold uppercase tracking-widest text-xs backdrop-blur-sm">
                   About SmartWash
                 </span>
               </div>
-              
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
-                <BlurText 
+
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-foreground leading-tight">
+                <BlurText
                   text="Nairobi's"
                   delay={40}
                   animateBy="words"
-                  className="block text-white"
+                  className="block text-foreground"
                 />
-                <BlurText 
+                <BlurText
                   text="Finest Service"
                   delay={40}
                   animateBy="words"
-                  className="block bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent"
+                  className="block bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent"
                 />
               </h2>
 
-              <div className="text-lg sm:text-xl text-white/70 max-w-xl">
+              <div className="text-lg sm:text-xl text-foreground/70 max-w-xl">
                 <TextType
                   text="Premium mobile detailing that comes to you, wherever you are in Kenya's capital."
                   typingSpeed={30}
                   loop={false}
                   showCursor={false}
                   startOnVisible={true}
-                  className="text-lg sm:text-xl text-white/70"
+                  className="text-lg sm:text-xl text-foreground/70 font-light"
                 />
               </div>
             </div>
@@ -76,7 +76,7 @@ const About = () => {
                 loop={false}
                 showCursor={false}
                 startOnVisible={true}
-                className="text-lg text-white/90 leading-relaxed"
+                className="text-lg text-foreground/90 leading-relaxed font-light"
               />
 
               <TextType
@@ -86,7 +86,7 @@ const About = () => {
                 loop={false}
                 showCursor={false}
                 startOnVisible={true}
-                className="text-lg text-white/90 leading-relaxed"
+                className="text-lg text-foreground/90 leading-relaxed font-light"
               />
 
               <TextType
@@ -96,29 +96,29 @@ const About = () => {
                 loop={false}
                 showCursor={false}
                 startOnVisible={true}
-                className="text-lg text-white/90 leading-relaxed"
+                className="text-lg text-foreground/90 leading-relaxed font-light"
               />
             </div>
 
             {/* Feature Icons */}
             <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-4">
               <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center backdrop-blur-sm">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center backdrop-blur-sm group hover:bg-primary/20 transition-colors duration-500">
                   <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                 </div>
-                <div className="text-white/90 font-semibold text-xs sm:text-sm">Premium Quality</div>
+                <div className="text-foreground/90 font-serif font-medium text-xs sm:text-sm tracking-wide">Premium Quality</div>
               </div>
               <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center backdrop-blur-sm">
-                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/5 border border-primary/20 flex items-center justify-center backdrop-blur-sm group hover:bg-primary/15 transition-colors duration-500">
+                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-primary/80" />
                 </div>
-                <div className="text-white/90 font-semibold text-xs sm:text-sm">Paint Protection</div>
+                <div className="text-foreground/90 font-serif font-medium text-xs sm:text-sm tracking-wide">Paint Protection</div>
               </div>
               <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-500/20 border border-green-400/30 flex items-center justify-center backdrop-blur-sm">
-                  <Droplet className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/5 border border-primary/20 flex items-center justify-center backdrop-blur-sm group hover:bg-primary/15 transition-colors duration-500">
+                  <Droplet className="w-6 h-6 sm:w-8 sm:h-8 text-primary/80" />
                 </div>
-                <div className="text-white/90 font-semibold text-xs sm:text-sm">Eco-Friendly</div>
+                <div className="text-foreground/90 font-serif font-medium text-xs sm:text-sm tracking-wide">Eco-Friendly</div>
               </div>
             </div>
 
@@ -140,7 +140,7 @@ const About = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="overflow-hidden border border-white/20 hover:border-primary/50 transition-all duration-500 group">
-                  <img 
+                  <img
                     src="https://images.pexels.com/photos/4870700/pexels-photo-4870700.jpeg?auto=compress&cs=tinysrgb&w=800"
                     alt="Interior detailing"
                     className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
@@ -148,7 +148,7 @@ const About = () => {
                   />
                 </div>
                 <div className="overflow-hidden border border-white/20 hover:border-primary/50 transition-all duration-500 group">
-                  <img 
+                  <img
                     src="https://images.pexels.com/photos/4870727/pexels-photo-4870727.jpeg?auto=compress&cs=tinysrgb&w=800"
                     alt="Polish detailing"
                     className="w-full h-48 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
@@ -158,7 +158,7 @@ const About = () => {
               </div>
               <div className="space-y-4 pt-12">
                 <div className="overflow-hidden border border-white/20 hover:border-primary/50 transition-all duration-500 group">
-                  <img 
+                  <img
                     src="https://images.pexels.com/photos/4870705/pexels-photo-4870705.jpeg?auto=compress&cs=tinysrgb&w=800"
                     alt="Wheel cleaning"
                     className="w-full h-48 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
@@ -166,7 +166,7 @@ const About = () => {
                   />
                 </div>
                 <div className="overflow-hidden border border-white/20 hover:border-primary/50 transition-all duration-500 group">
-                  <img 
+                  <img
                     src="https://images.pexels.com/photos/6873020/pexels-photo-6873020.jpeg?auto=compress&cs=tinysrgb&w=800"
                     alt="Exterior wash"
                     className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
