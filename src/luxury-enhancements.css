@@ -1,0 +1,460 @@
+/* ===================================
+   ULTRA-LUXURY ENHANCEMENTS
+   Phase 5: Maximum Premium Experience
+   =================================== */
+
+/* Expanded Color Palette */
+:root {
+    /* Dark Mode - Midnight Gold Expanded */
+    --gold-bright: 45 100% 60%;
+    --gold-standard: 43 74% 49%;
+    --gold-dark: 43 74% 35%;
+    --bronze: 30 50% 40%;
+    --champagne: 48 80% 75%;
+    --amber: 38 100% 50%;
+    --burgundy: 0 63% 31%;
+
+    /* Light Mode - Ruby Day Expanded */
+    --ruby-bright: 348 83% 58%;
+    --ruby-standard: 348 83% 47%;
+    --ruby-dark: 348 100% 25%;
+    --rose: 350 100% 70%;
+    --coral: 16 100% 66%;
+    --blush: 340 82% 85%;
+    --rose-gold: 25 76% 65%;
+
+    /* Metallic Effects */
+    --gold-metallic: linear-gradient(135deg,
+            hsl(48, 100%, 88%) 0%,
+            hsl(43, 74%, 49%) 25%,
+            hsl(45, 100%, 60%) 50%,
+            hsl(43, 74%, 49%) 75%,
+            hsl(48, 100%, 88%) 100%);
+
+    --ruby-metallic: linear-gradient(135deg,
+            hsl(350, 100%, 75%) 0%,
+            hsl(348, 83%, 47%) 25%,
+            hsl(348, 83%, 58%) 50%,
+            hsl(348, 83%, 47%) 75%,
+            hsl(350, 100%, 75%) 100%);
+
+    /* Texture Overlays */
+    --grain-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* Metallic Card Effect */
+.card-metallic-gold {
+    position: relative;
+    background: linear-gradient(135deg,
+            hsl(var(--background)) 0%,
+            hsl(var(--background)) 100%);
+    border: 1px solid hsl(var(--primary) / 0.2);
+    overflow: hidden;
+}
+
+.card-metallic-gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-metallic);
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.card-metallic-gold::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--grain-texture);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* 3D Card Tilt Effect */
+.card-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-3d:hover {
+    transform: translateZ(20px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+}
+
+.card-3d-inner {
+    transform: translateZ(40px);
+}
+
+/* Holographic Border Effect */
+.holographic-border {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(var(--background), var(--background)) padding-box,
+        linear-gradient(135deg,
+            hsl(var(--primary)) 0%,
+            hsl(var(--primary-light)) 25%,
+            hsl(var(--primary)) 50%,
+            hsl(var(--primary-light)) 75%,
+            hsl(var(--primary)) 100%) border-box;
+    background-size: 100% 100%, 200% 200%;
+    animation: holographic-shift 3s linear infinite;
+}
+
+@keyframes holographic-shift {
+
+    0%,
+    100% {
+        background-position: 0% 0%, 0% 0%;
+    }
+
+    50% {
+        background-position: 0% 0%, 100% 100%;
+    }
+}
+
+/* Liquid Blob Background */
+.liquid-blob {
+    position: absolute;
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    filter: blur(40px);
+    opacity: 0.15;
+    animation: blob-morph 20s ease-in-out infinite;
+}
+
+@keyframes blob-morph {
+
+    0%,
+    100% {
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        transform: translate(20px, -20px) scale(1.1);
+    }
+
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    75% {
+        border-radius: 70% 30% 50% 50% / 30% 70% 50% 50%;
+        transform: translate(20px, 20px) scale(1.05);
+    }
+}
+
+/* Advanced Glassmorphism */
+.glass-luxury {
+    background: linear-gradient(135deg,
+            hsl(var(--background) / 0.7) 0%,
+            hsl(var(--background) / 0.5) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsl(var(--foreground) / 0.1);
+    box-shadow:
+        0 8px 32px 0 hsl(var(--primary) / 0.1),
+        inset 0 1px 0 0 hsl(var(--foreground) / 0.1);
+}
+
+.glass-luxury-premium {
+    background: linear-gradient(135deg,
+            hsl(var(--background) / 0.8) 0%,
+            hsl(var(--background) / 0.6) 100%);
+    backdrop-filter: blur(30px) saturate(200%) brightness(1.1);
+    -webkit-backdrop-filter: blur(30px) saturate(200%) brightness(1.1);
+    border: 1.5px solid hsl(var(--primary) / 0.2);
+    box-shadow:
+        0 12px 48px 0 hsl(var(--primary) / 0.15),
+        inset 0 2px 0 0 hsl(var(--foreground) / 0.15),
+        inset 0 -2px 0 0 hsl(var(--primary) / 0.1);
+}
+
+/* Shimmer Effect */
+.shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            hsl(var(--primary) / 0.2) 50%,
+            transparent 100%);
+    animation: shimmer-slide 3s infinite;
+}
+
+@keyframes shimmer-slide {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Gold Foil Text Effect */
+.text-gold-foil {
+    background: var(--gold-metallic);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gold-shine 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px hsl(var(--primary) / 0.5));
+}
+
+@keyframes gold-shine {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Embossed Text Effect (Light Mode) */
+.text-embossed {
+    color: hsl(var(--foreground));
+    text-shadow:
+        1px 1px 0 hsl(var(--background)),
+        -1px -1px 0 hsl(var(--foreground) / 0.1),
+        2px 2px 4px hsl(var(--foreground) / 0.05);
+}
+
+/* Magnetic Button Effect */
+.btn-magnetic {
+    position: relative;
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-magnetic:hover {
+    transform: scale(1.05);
+}
+
+/* Ripple Effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: hsl(var(--primary) / 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Floating Animation */
+.float-gentle {
+    animation: float-gentle 6s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Glow Pulse */
+.glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+    }
+}
+
+/* Premium Shadow Layers */
+.shadow-luxury {
+    box-shadow:
+        0 2px 4px hsl(var(--foreground) / 0.02),
+        0 4px 8px hsl(var(--foreground) / 0.03),
+        0 8px 16px hsl(var(--foreground) / 0.04),
+        0 16px 32px hsl(var(--foreground) / 0.05),
+        0 0 0 1px hsl(var(--foreground) / 0.05);
+}
+
+.shadow-luxury-gold {
+    box-shadow:
+        0 4px 8px hsl(var(--primary) / 0.1),
+        0 8px 16px hsl(var(--primary) / 0.15),
+        0 16px 32px hsl(var(--primary) / 0.2),
+        0 0 60px hsl(var(--primary) / 0.25);
+}
+
+/* Perspective Container */
+.perspective-container {
+    perspective: 1000px;
+    perspective-origin: center;
+}
+
+/* Gradient Mesh Background */
+.gradient-mesh {
+    background:
+        radial-gradient(at 20% 30%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
+        radial-gradient(at 80% 70%, hsl(var(--primary-light) / 0.15) 0px, transparent 50%),
+        radial-gradient(at 40% 80%, hsl(var(--primary) / 0.1) 0px, transparent 50%);
+    animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Light Ray Effect */
+.light-rays {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg,
+            transparent 30%,
+            hsl(var(--primary) / 0.05) 50%,
+            transparent 70%);
+    background-size: 200% 200%;
+    animation: light-sweep 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes light-sweep {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 200% 200%;
+    }
+}
+
+/* Reflection Effect */
+.reflection {
+    position: relative;
+}
+
+.reflection::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            transparent 0%,
+            hsl(var(--foreground) / 0.02) 50%,
+            transparent 100%);
+    transform: scaleY(-1);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Animated Gradient Border */
+.gradient-border {
+    position: relative;
+    background: var(--background);
+    border-radius: inherit;
+}
+
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg,
+            hsl(var(--primary)),
+            hsl(var(--primary-light)),
+            hsl(var(--primary)),
+            hsl(var(--primary-light)));
+    background-size: 300% 300%;
+    border-radius: inherit;
+    z-index: -1;
+    animation: gradient-rotate 4s linear infinite;
+}
+
+@keyframes gradient-rotate {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Luxury Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+    border-left: 1px solid hsl(var(--foreground) / 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,
+            hsl(var(--primary) / 0.5),
+            hsl(var(--primary-light) / 0.5));
+    border-radius: 6px;
+    border: 2px solid hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg,
+            hsl(var(--primary) / 0.7),
+            hsl(var(--primary-light) / 0.7));
+}
+
+/* Selection Styling */
+::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+}
+
+::-moz-selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+}

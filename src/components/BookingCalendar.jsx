@@ -39,9 +39,9 @@ const BookingCalendar = () => {
   useEffect(() => {
     let active = true;
     const load = async () => {
-      if (!selectedDate) { 
-        setAvailability([]); 
-        return; 
+      if (!selectedDate) {
+        setAvailability([]);
+        return;
       }
       setLoading(true);
       const times = await bookingsService.getAvailability(selectedDate);
@@ -55,24 +55,24 @@ const BookingCalendar = () => {
   }, [selectedDate]);
 
   const handleBookNow = () => {
-    navigate('/bookings', { 
-      state: { 
-        preselectedDate: selectedDate, 
-        preselectedTime: selectedTime 
-      } 
+    navigate('/bookings', {
+      state: {
+        preselectedDate: selectedDate,
+        preselectedTime: selectedTime
+      }
     });
   };
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black"></div>
-      
-      {/* Animated Orbs */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
+    <section className="relative py-24 overflow-hidden bg-background transition-colors duration-500">
+      {/* Background - White in light theme, dark in dark theme */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background"></div>
+
+      {/* Animated Orbs - Subtle in light theme */}
+      <div className="absolute inset-0 opacity-10 dark:opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-3xl" 
-             style={{ animation: 'float 8s ease-in-out infinite' }} />
+        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-primary-light/20 rounded-full blur-3xl"
+          style={{ animation: 'float 8s ease-in-out infinite' }} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -87,22 +87,22 @@ const BookingCalendar = () => {
           <div className="inline-block px-4 py-2 bg-primary/20 border border-primary/30 text-primary font-bold uppercase tracking-widest text-xs backdrop-blur-sm mb-6">
             Quick Booking
           </div>
-          
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6">
-            <BlurText 
+
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6">
+            <BlurText
               text="Schedule Your"
               delay={40}
               animateBy="words"
-              className="block text-white"
+              className="block text-foreground"
             />
-            <BlurText 
+            <BlurText
               text="Perfect Time"
               delay={40}
               animateBy="words"
-              className="block bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent"
+              className="block bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent"
             />
           </h2>
-          
+
           <div className="text-xl text-white/70 max-w-2xl mx-auto">
             <AnimatedText
               text="Choose your preferred date and time slot for a premium detailing experience"
@@ -124,12 +124,12 @@ const BookingCalendar = () => {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+              <div className="bg-card/50 backdrop-blur-xl border border-foreground/10 rounded-2xl p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-3 bg-primary/20 border border-primary/30 rounded-lg">
                     <Calendar className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-black text-white">Select Date</h3>
+                  <h3 className="text-2xl font-black text-foreground">Select Date</h3>
                 </div>
 
                 {/* Date Grid */}
@@ -144,11 +144,10 @@ const BookingCalendar = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleDateSelect(dayInfo.date)}
-                      className={`relative p-4 rounded-xl transition-all duration-300 ${
-                        selectedDate === dayInfo.date
-                          ? 'bg-primary border-primary text-white shadow-lg shadow-primary/50'
-                          : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-primary/50'
-                      }`}
+                      className={`relative p-4 rounded-xl transition-all duration-300 ${selectedDate === dayInfo.date
+                          ? 'bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/50'
+                          : 'bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 hover:border-primary/50'
+                        }`}
                     >
                       <div className="text-xs font-medium opacity-70 mb-1">{dayInfo.dayName}</div>
                       <div className="text-2xl font-black">{dayInfo.day}</div>
@@ -169,10 +168,10 @@ const BookingCalendar = () => {
                     className="mt-8"
                   >
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="p-3 bg-cyan-500/20 border border-cyan-400/30 rounded-lg">
-                        <Clock className="w-6 h-6 text-cyan-400" />
+                      <div className="p-3 bg-primary-light/20 border border-primary-light/30 rounded-lg">
+                        <Clock className="w-6 h-6 text-primary-light" />
                       </div>
-                      <h3 className="text-2xl font-black text-white">Available Times</h3>
+                      <h3 className="text-2xl font-black text-foreground">Available Times</h3>
                     </div>
 
                     {loading ? (
@@ -195,11 +194,10 @@ const BookingCalendar = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setSelectedTime(time)}
-                            className={`p-4 rounded-lg font-bold transition-all duration-300 ${
-                              selectedTime === time
-                                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/50'
-                                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-cyan-500/50'
-                            }`}
+                            className={`p-4 rounded-lg font-bold transition-all duration-300 ${selectedTime === time
+                                ? 'bg-primary-light text-primary-foreground shadow-lg shadow-primary-light/50'
+                                : 'bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 hover:border-primary-light/50'
+                              }`}
                           >
                             {time}
                           </motion.button>
@@ -220,26 +218,26 @@ const BookingCalendar = () => {
               className="space-y-6"
             >
               {/* Booking Summary */}
-              <div className="bg-gradient-to-br from-primary/20 to-cyan-500/20 backdrop-blur-xl border border-primary/30 rounded-2xl p-8">
+              <div className="bg-gradient-to-br from-primary/20 to-primary-light/20 backdrop-blur-xl border border-primary/30 rounded-2xl p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <Sparkles className="w-6 h-6 text-primary" />
-                  <h3 className="text-2xl font-black text-white">Your Selection</h3>
+                  <h3 className="text-2xl font-black text-foreground">Your Selection</h3>
                 </div>
 
                 <div className="space-y-4">
                   {/* Selected Date */}
-                  <div className="bg-black/30 rounded-lg p-4 border border-white/10">
-                    <div className="text-xs text-white/50 uppercase tracking-wider mb-1">Date</div>
-                    <div className="text-white font-bold text-lg">
-                      {selectedDate || <span className="text-white/40">Not selected</span>}
+                  <div className="bg-background/50 rounded-lg p-4 border border-foreground/10">
+                    <div className="text-xs text-foreground/50 uppercase tracking-wider mb-1">Date</div>
+                    <div className="text-foreground font-bold text-lg">
+                      {selectedDate || <span className="text-foreground/40">Not selected</span>}
                     </div>
                   </div>
 
                   {/* Selected Time */}
-                  <div className="bg-black/30 rounded-lg p-4 border border-white/10">
-                    <div className="text-xs text-white/50 uppercase tracking-wider mb-1">Time</div>
-                    <div className="text-white font-bold text-lg">
-                      {selectedTime || <span className="text-white/40">Not selected</span>}
+                  <div className="bg-background/50 rounded-lg p-4 border border-foreground/10">
+                    <div className="text-xs text-foreground/50 uppercase tracking-wider mb-1">Time</div>
+                    <div className="text-foreground font-bold text-lg">
+                      {selectedTime || <span className="text-foreground/40">Not selected</span>}
                     </div>
                   </div>
                 </div>
@@ -252,7 +250,7 @@ const BookingCalendar = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleBookNow}
-                    className="w-full mt-6 bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 uppercase tracking-wider text-sm shadow-xl shadow-primary/50 hover:shadow-2xl hover:shadow-primary/70"
+                    className="w-full mt-6 bg-gradient-to-r from-primary to-primary-light hover:from-primary/90 hover:to-primary-light/90 text-primary-foreground font-bold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-3 uppercase tracking-wider text-sm shadow-xl shadow-primary/50 hover:shadow-2xl hover:shadow-primary/70"
                   >
                     <CheckCircle2 className="w-5 h-5" />
                     <span>Continue Booking</span>
@@ -262,9 +260,9 @@ const BookingCalendar = () => {
               </div>
 
               {/* Quick Info */}
-              <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">Quick Tips</h4>
-                <div className="space-y-3 text-sm text-white/70">
+              <div className="bg-card/50 backdrop-blur-xl border border-foreground/10 rounded-2xl p-6">
+                <h4 className="text-foreground font-bold mb-4 text-sm uppercase tracking-wider">Quick Tips</h4>
+                <div className="space-y-3 text-sm text-foreground/70">
                   <div className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2" />
                     <span>Peak hours: 9AM-12PM, 2PM-5PM</span>

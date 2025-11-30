@@ -33,71 +33,75 @@ const About = () => {
 
           {/* Left Content */}
           <div className="space-y-6 sm:space-y-8">
-            <div className="space-y-3 sm:space-y-4">
-              <div className="inline-block">
-                <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 border border-primary/20 text-primary font-serif font-bold uppercase tracking-widest text-xs backdrop-blur-sm">
-                  About SmartWash
-                </span>
+            {/* Add semi-transparent background for better text legibility */}
+            <div className="bg-background/80 dark:bg-background/60 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-foreground/10">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="inline-block">
+                  <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 border border-primary/20 text-primary font-serif font-bold uppercase tracking-widest text-xs backdrop-blur-sm">
+                    About SmartWash
+                  </span>
+                </div>
+
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-foreground leading-tight">
+                  <BlurText
+                    text="Nairobi's"
+                    delay={40}
+                    animateBy="words"
+                    className="block text-foreground"
+                  />
+                  <BlurText
+                    text="Finest Service"
+                    delay={40}
+                    animateBy="words"
+                    className="block bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent"
+                  />
+                </h2>
+
+                <div className="text-lg sm:text-xl text-foreground/90 max-w-xl">
+                  <TextType
+                    text="Premium mobile detailing that comes to you, wherever you are in Kenya's capital."
+                    typingSpeed={30}
+                    loop={false}
+                    showCursor={false}
+                    startOnVisible={true}
+                    className="text-lg sm:text-xl text-foreground/90 font-light"
+                  />
+                </div>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-foreground leading-tight">
-                <BlurText
-                  text="Nairobi's"
-                  delay={40}
-                  animateBy="words"
-                  className="block text-foreground"
-                />
-                <BlurText
-                  text="Finest Service"
-                  delay={40}
-                  animateBy="words"
-                  className="block bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent"
-                />
-              </h2>
-
-              <div className="text-lg sm:text-xl text-foreground/70 max-w-xl">
+              <div className="space-y-4 sm:space-y-6 max-w-xl">
                 <TextType
-                  text="Premium mobile detailing that comes to you, wherever you are in Kenya's capital."
-                  typingSpeed={30}
+                  text="SmartWash leads Kenya's automotive care industry with cutting-edge detailing solutions. From the bustling streets of Westlands to the serene suburbs of Karen, we bring professional-grade car care directly to your location."
+                  typingSpeed={25}
+                  initialDelay={3000}
                   loop={false}
                   showCursor={false}
                   startOnVisible={true}
-                  className="text-lg sm:text-xl text-foreground/70 font-light"
+                  className="text-base sm:text-lg text-foreground/90 leading-relaxed font-light"
+                />
+
+                <TextType
+                  text="Our eco-friendly, waterless technology protects both your vehicle and Nairobi's environment. Every service—from ceramic coating to interior detailing—is performed by certified technicians using premium products trusted by Kenya's automotive enthusiasts."
+                  typingSpeed={25}
+                  initialDelay={8000}
+                  loop={false}
+                  showCursor={false}
+                  startOnVisible={true}
+                  className="text-lg text-foreground/90 leading-relaxed font-light"
+                />
+
+                <TextType
+                  text="Whether it's a quick refresh or complete transformation, we deliver excellence without compromising convenience. Book now and experience the SmartWash difference."
+                  typingSpeed={25}
+                  initialDelay={15000}
+                  loop={false}
+                  showCursor={false}
+                  startOnVisible={true}
+                  className="text-lg text-foreground/90 leading-relaxed font-light"
                 />
               </div>
             </div>
-
-            <div className="space-y-4 sm:space-y-6 max-w-xl">
-              <TextType
-                text="SmartWash leads Kenya's automotive care industry with cutting-edge detailing solutions. From the bustling streets of Westlands to the serene suburbs of Karen, we bring professional-grade car care directly to your location."
-                typingSpeed={25}
-                initialDelay={3000}
-                loop={false}
-                showCursor={false}
-                startOnVisible={true}
-                className="text-lg text-foreground/90 leading-relaxed font-light"
-              />
-
-              <TextType
-                text="Our eco-friendly, waterless technology protects both your vehicle and Nairobi's environment. Every service—from ceramic coating to interior detailing—is performed by certified technicians using premium products trusted by Kenya's automotive enthusiasts."
-                typingSpeed={25}
-                initialDelay={8000}
-                loop={false}
-                showCursor={false}
-                startOnVisible={true}
-                className="text-lg text-foreground/90 leading-relaxed font-light"
-              />
-
-              <TextType
-                text="Whether it's a quick refresh or complete transformation, we deliver excellence without compromising convenience. Book now and experience the SmartWash difference."
-                typingSpeed={25}
-                initialDelay={15000}
-                loop={false}
-                showCursor={false}
-                startOnVisible={true}
-                className="text-lg text-foreground/90 leading-relaxed font-light"
-              />
-            </div>
+            {/* End of legibility background wrapper */}
 
             {/* Feature Icons */}
             <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-4">

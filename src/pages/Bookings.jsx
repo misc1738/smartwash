@@ -8,7 +8,7 @@ import BlurText from '../components/ui/BlurText';
 import { getCategories, getMakesByCategory, getModelCategory } from '../data/vehicles';
 
 const getStatusColor = (status) => {
-  switch(status) {
+  switch (status) {
     case 'confirmed': return 'text-green-400 bg-green-500/20 border-green-500/30';
     case 'pending': return 'text-yellow-400 bg-yellow-500/20 border-yellow-500/30';
     case 'completed': return 'text-blue-400 bg-blue-500/20 border-blue-500/30';
@@ -28,6 +28,10 @@ export default function Bookings() {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const preService = params.get('service') || undefined;
+
+  // Get preselected date/time from BookingCalendar navigation
+  const preselectedDate = location.state?.preselectedDate || undefined;
+  const preselectedTime = location.state?.preselectedTime || undefined;
 
   const refresh = async () => {
     setLoading(true);
@@ -84,7 +88,7 @@ export default function Bookings() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `bookings_${new Date().toISOString().slice(0,10)}.csv`;
+    a.download = `bookings_${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -137,8 +141,8 @@ export default function Bookings() {
       <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black"></div>
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-3xl" 
-             style={{ animation: 'float 8s ease-in-out infinite' }} />
+        <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-3xl"
+          style={{ animation: 'float 8s ease-in-out infinite' }} />
       </div>
 
       <div className="container mx-auto px-4 py-16 relative z-10">
@@ -148,13 +152,13 @@ export default function Bookings() {
             Book Your Service
           </div>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6">
-            <BlurText 
+            <BlurText
               text="Reserve Your"
               delay={40}
               animateBy="words"
               className="block text-white"
             />
-            <BlurText 
+            <BlurText
               text="Premium Wash"
               delay={40}
               animateBy="words"
@@ -168,50 +172,74 @@ export default function Bookings() {
 
         {/* Booking Form Section */}
         <div className="max-w-4xl mx-auto mb-20">
-          <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-8 md:p-12">
-            <BookingForm initial={{ service: preService }} onSaved={(booking) => {
-              if (booking) {
-                navigate('/booking-confirmation', { state: { booking } });
-              } else {
-                refresh();
-              }
-            }} />
+          {/* Prefilled Notice */}
+          {(preselectedDate || preselectedTime) && (
+            <div className="mb-6 p-4 bg-primary/10 border border-primary/30 rounded-xl backdrop-blur-sm flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+              <div>
+                <p className="text-foreground font-medium text-sm">
+                  Your selected time has been prefilled!
+                </p>
+                <p className="text-foreground/60 text-xs mt-1">
+                  {preselectedDate && `Date: ${preselectedDate}`}
+                  {preselectedDate && preselectedTime && ' • '}
+                  {preselectedTime && `Time: ${preselectedTime}`}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-8 md:p-12 rounded-2xl">
+            <BookingForm
+              initial={{
+                ...(preService && { service: String(preService) }),
+                ...(preselectedDate && { date: String(preselectedDate) }),
+                ...(preselectedTime && { time: String(preselectedTime) })
+              }}
+              onSaved={(booking) => {
+                if (booking) {
+                  navigate('/booking-confirmation', { state: { booking } });
+                } else {
+                  refresh();
+                }
+              }}
+            />
           </div>
         </div>
 
         {/* Recent Bookings Section */}
         <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8 gap-4">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-black text-white">Your Bookings</h2>
-                <p className="text-white/50 text-sm">Manage your upcoming and past bookings.</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search name, phone, make, model or plate"
-                  className="px-3 py-2 bg-white/5 border border-white/10 text-white placeholder-white/50 rounded-md"
-                />
-                <select className="px-2 py-2 bg-white/5 border border-white/10 text-white rounded-md" value={filterCategory || ''} onChange={(e) => setFilterCategory(e.target.value || null)}>
-                  <option value="">All categories</option>
-                  {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-                </select>
-                <select className="px-2 py-2 bg-white/5 border border-white/10 text-white rounded-md" value={filterMake || ''} onChange={(e) => setFilterMake(e.target.value || null)}>
-                  <option value="">All makes</option>
-                  {makeOptionsForCategory.map((m) => <option key={m} value={m}>{m}</option>)}
-                </select>
-                <button 
-                  onClick={refresh}
-                  disabled={loading}
-                  className="px-4 py-2 bg-white/5 border border-white/10 text-white hover:border-primary/50 transition-all backdrop-blur-sm disabled:opacity-50"
-                >
-                  {loading ? <Loader className="w-5 h-5 animate-spin" /> : 'Refresh'}
-                </button>
-                <button onClick={() => exportCSV(filteredList)} className="px-4 py-2 bg-primary/20 border border-primary/30 text-primary hover:bg-primary/30 transition-all">Export CSV</button>
-              </div>
+          <div className="flex items-center justify-between mb-8 gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-black text-white">Your Bookings</h2>
+              <p className="text-white/50 text-sm">Manage your upcoming and past bookings.</p>
             </div>
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search name, phone, make, model or plate"
+                className="px-3 py-2 bg-white/5 border border-white/10 text-white placeholder-white/50 rounded-md"
+              />
+              <select className="px-2 py-2 bg-white/5 border border-white/10 text-white rounded-md" value={filterCategory || ''} onChange={(e) => setFilterCategory(e.target.value || null)}>
+                <option value="">All categories</option>
+                {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <select className="px-2 py-2 bg-white/5 border border-white/10 text-white rounded-md" value={filterMake || ''} onChange={(e) => setFilterMake(e.target.value || null)}>
+                <option value="">All makes</option>
+                {makeOptionsForCategory.map((m) => <option key={m} value={m}>{m}</option>)}
+              </select>
+              <button
+                onClick={refresh}
+                disabled={loading}
+                className="px-4 py-2 bg-white/5 border border-white/10 text-white hover:border-primary/50 transition-all backdrop-blur-sm disabled:opacity-50"
+              >
+                {loading ? <Loader className="w-5 h-5 animate-spin" /> : 'Refresh'}
+              </button>
+              <button onClick={() => exportCSV(filteredList)} className="px-4 py-2 bg-primary/20 border border-primary/30 text-primary hover:bg-primary/30 transition-all">Export CSV</button>
+            </div>
+          </div>
 
           {loading ? (
             <div className="text-center py-20">
@@ -233,8 +261,8 @@ export default function Bookings() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredList.map((booking) => (
-                <div 
-                  key={booking.id} 
+                <div
+                  key={booking.id}
                   className="group bg-black/40 border border-white/10 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 p-6 hover:shadow-2xl hover:shadow-primary/20"
                 >
                   {/* Booking Header */}
@@ -346,27 +374,27 @@ export default function Bookings() {
                     </div>
                   ) : (
                     <div className="mt-6 pt-4 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <button 
+                      <button
                         className="px-4 py-2 bg-white/5 border border-white/10 text-white hover:border-primary/50 transition-all text-sm font-bold uppercase tracking-wide flex items-center justify-center gap-2"
                         onClick={() => openEdit(booking)}
                         title="Edit booking"
                       >
                         <Pencil className="w-4 h-4" /> Edit
                       </button>
-                      <button 
+                      <button
                         className="px-4 py-2 bg-primary/20 border border-primary/30 text-primary hover:bg-primary/30 transition-all text-sm font-bold uppercase tracking-wide"
                         onClick={() => startReschedule(booking)}
                       >
                         Reschedule
                       </button>
-                      <button 
+                      <button
                         onClick={async () => { await bookingsService.cancel(booking.id); await refresh(); }}
                         className="px-4 py-2 bg-white/5 border border-white/10 text-white/60 hover:border-yellow-500/50 hover:text-yellow-300 transition-all text-sm font-bold uppercase tracking-wide"
                         title="Cancel (mark as cancelled)"
                       >
                         Cancel
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(booking)}
                         className="px-4 py-2 bg-white/5 border border-white/10 text-white/60 hover:border-red-500/50 hover:text-red-400 transition-all text-sm font-bold uppercase tracking-wide flex items-center justify-center gap-2"
                         title="Delete booking"
@@ -383,14 +411,14 @@ export default function Bookings() {
       </div>
 
       {editOpen && (
-        <BookingDrawer 
+        <BookingDrawer
           open={editOpen}
           initial={editInitial}
           onClose={(saved) => { setEditOpen(false); setEditInitial(null); if (saved) refresh(); }}
         />
       )}
 
-      
+
 
       <style>{`
         @keyframes float {

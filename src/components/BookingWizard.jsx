@@ -32,9 +32,24 @@ export default function BookingWizard({ onClose }) {
     const prevStep = () => setStep(s => s - 1);
 
     const handleBook = () => {
-        // In a real app, submit to backend here
-        console.log('Booking submitted:', booking);
-        navigate('/booking-confirmation', { state: { booking: { ...booking, totalPrice: total } } });
+        // Navigate to payment page FIRST, then confirmation after payment
+        const paymentBooking = {
+            ...booking,
+            amount: total,
+            totalPrice: total,
+            service: booking.package?.title || 'Service',
+            vehicle: booking.vehicle?.label || 'Vehicle',
+            orderId: `SW-${Date.now()}`,
+            package: booking.package,
+            date: booking.date,
+            time: booking.time,
+            name: booking.details.name,
+            phone: booking.details.phone,
+            location: booking.details.location
+        };
+
+        console.log('Proceeding to payment:', paymentBooking);
+        navigate('/mpesa-test', { state: { booking: paymentBooking } });
         if (onClose) onClose();
     };
 

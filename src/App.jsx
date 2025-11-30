@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import Bookings from "./pages/Bookings";
 import Services from "./pages/Services";
 import BookingConfirmation from "./pages/BookingConfirmation";
@@ -92,6 +93,7 @@ function App() {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/services" element={<RequireAuth><Services /></RequireAuth>} />
             <Route path="/bookings" element={<RequireAuth><Bookings /></RequireAuth>} />
             <Route path="/booking-confirmation" element={<RequireAuth><BookingConfirmation /></RequireAuth>} />

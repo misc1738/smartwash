@@ -1,13 +1,10 @@
-import { Calendar, MapPin, Sparkles } from "lucide-react";
 import Hero from "../components/Hero";
 import HeroScrollSection from "../components/HeroScrollSection";
 import ServiceShowcase from "../components/ServiceShowcase";
 import ImageHeroSection from "../components/ImageHeroSection";
-import About from "../components/About";
 import Services from "../components/Services";
 import BookingCalendar from "../components/BookingCalendar";
 import Marquee from "../components/Marquee";
-import Testimonials from "../components/Testimonials";
 import SectionDivider from "../components/ui/SectionDivider";
 
 export default function Home() {
@@ -81,10 +78,6 @@ export default function Home() {
         overlayOpacity="0.75"
       />
 
-      <SectionDivider />
-      <About />
-      <SectionDivider />
-      <Testimonials />
       <SectionDivider />
       <Marquee />
 

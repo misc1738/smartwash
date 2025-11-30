@@ -80,7 +80,7 @@ const Hero = () => {
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 2000);
+    }, 4000); // Slowed down from 2000ms to 4000ms
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
 
@@ -93,42 +93,44 @@ const Hero = () => {
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
         <ThemeHeroImage />
-        {/* Luxury Gradients - Adaptive & Subtle */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/90"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40"></div>
-        {/* Cinematic Vignette */}
-        <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 60%, #0a0a0a 100%)'
-        }}></div>
 
-        {/* Gold Glow Overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <motion.div
-            className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-primary/30 rounded-full blur-[120px]"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 left-0 w-[600px] h-[600px] bg-primary-light/20 rounded-full blur-[120px]"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
-        </div>
+        {/* Subtle Overlay to Reduce Image Strength - Makes Text Stand Out */}
+        <div className="absolute inset-0 bg-background/15"></div>
+
+        {/* Subtle Gradient for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/15 via-transparent to-background/40"></div>
+
+        {/* Minimal Side Gradients for Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/25 via-transparent to-background/25"></div>
+      </div>
+
+      {/* Subtle Animated Orbs - Moved Outside Image Container */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none z-10">
+        <motion.div
+          className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[100px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 left-0 w-[600px] h-[600px] bg-primary-light/20 rounded-full blur-[120px]"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.1, 0.3, 0.1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
       </div>
 
       {/* Rotating Gradient Overlay - Adaptive */}
@@ -189,32 +191,50 @@ const Hero = () => {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl max-w-5xl tracking-tight text-center font-serif font-bold leading-none px-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold text-foreground leading-none tracking-tighter text-center max-w-6xl"
             >
-              <span className="block text-foreground drop-shadow-2xl mb-2">
-                Redefining
-              </span>
-              <span className="relative flex w-full justify-center overflow-visible text-center min-h-[1.2em]">
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={index}
-                    className="absolute bg-gradient-to-b from-primary-light via-primary to-primary-glow bg-clip-text text-transparent whitespace-nowrap px-2 pb-4"
-                    initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
-                    animate={
-                      titleNumber === index
-                        ? { y: 0, opacity: 1, filter: "blur(0px)" }
-                        : { y: titleNumber > index ? -50 : 50, opacity: 0, filter: "blur(10px)" }
-                    }
-                    transition={{ type: "spring", stiffness: 50, damping: 20 }}
-                  >
-                    {title}
-                  </motion.span>
-                ))}
+              <span className="block mb-4">Nairobi's Premier</span>
+              <span className="relative flex w-full justify-center overflow-hidden text-center min-h-[1.2em]">
+                {titles.map((title, index) => {
+                  const isActive = titleNumber === index;
+                  const isPast = titleNumber > index;
+
+                  return (
+                    <motion.span
+                      key={index}
+                      className="absolute text-gold-foil whitespace-nowrap"
+                      initial={{
+                        opacity: 0,
+                        y: 80,
+                        filter: "blur(30px)",
+                        scale: 0.6,
+                        rotateX: 90,
+                        letterSpacing: "0.2em"
+                      }}
+                      animate={{
+                        y: isActive ? 0 : (isPast ? -80 : 80),
+                        opacity: isActive ? 1 : 0,
+                        filter: isActive ? "blur(0px) drop-shadow(0 0 30px hsl(var(--primary) / 0.5))" : "blur(30px)",
+                        scale: isActive ? 1 : 0.6,
+                        rotateX: isActive ? 0 : (isPast ? -90 : 90),
+                        letterSpacing: isActive ? "normal" : "0.2em"
+                      }}
+                      transition={{
+                        duration: isActive ? 1.2 : 0.8,
+                        ease: [0.16, 1, 0.3, 1]
+                      }}
+                    >
+                      {title}
+                    </motion.span>
+                  );
+                })}
               </span>
             </motion.h1>
+
+
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -297,7 +317,7 @@ const Hero = () => {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.button>
-    </section>
+    </section >
   );
 };
 

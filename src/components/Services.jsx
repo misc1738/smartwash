@@ -11,12 +11,14 @@ const services = [
     key: 'exterior-wash',
     title: "Exterior Wash",
     subtitle: "Essential Clean",
-    price: "KSh 899",
+    price: "1,500",
+    duration: "45 mins",
     description: "Hand wash and dry for a spotless exterior finish",
     image: "/img/pexels-kopriva.jpg",
     srcLight: "/img/pexels-karola-g-4870724.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&q=80",
     video: "https://cdn.coverr.co/videos/coverr-car-wash-soap-5336/1080p.mp4",
+    popular: false,
     features: [
       'Hand Wash & Dry',
       'Wheel Cleaning',
@@ -28,12 +30,14 @@ const services = [
     key: 'interior-detail',
     title: "Interior Detail",
     subtitle: "Deep Clean",
-    price: "KSh 1,349",
+    price: "2,500",
+    duration: "1.5 hours",
     description: "Complete interior cleaning and sanitization",
     image: "/img/pexels-mcraftpix-21011.jpg",
     srcLight: "/img/pexels-sarmad-mughal-94606-305070.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=800&q=80",
     video: "https://cdn.coverr.co/videos/coverr-cleaning-car-interior-5339/1080p.mp4",
+    popular: false,
     features: [
       'Vacuum All Surfaces',
       'Dashboard Clean',
@@ -42,37 +46,41 @@ const services = [
     ],
   },
   {
-    key: 'wax-polish',
-    title: "Wax & Polish",
-    subtitle: "Premium Shine",
-    price: "KSh 1,949",
-    description: "Professional waxing for lasting protection and shine",
+    key: 'premium-package',
+    title: "Premium Package",
+    subtitle: "Most Popular",
+    price: "4,500",
+    duration: "2.5 hours",
+    description: "Complete exterior and interior detailing with wax",
     image: "/img/pexels-sarmad-mughal-94606-305070.jpg",
     srcLight: "/img/pexels-mcraftpix-21011.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80",
     video: "https://cdn.coverr.co/videos/coverr-polishing-a-car-5337/1080p.mp4",
+    popular: true,
     features: [
-      'Clay Bar Treatment',
-      'Premium Wax',
-      'Paint Polish',
-      'UV Protection'
+      'Exterior + Interior Detail',
+      'Premium Wax & Polish',
+      'Engine Bay Clean',
+      'Headlight Restoration'
     ],
   },
   {
-    key: 'full-detail',
-    title: "Full Detail",
-    subtitle: "Complete Care",
-    price: "KSh 3,499",
-    description: "Comprehensive interior and exterior detailing service",
+    key: 'ultimate-detail',
+    title: "Ultimate Detail",
+    subtitle: "Luxury Treatment",
+    price: "7,500",
+    duration: "4 hours",
+    description: "The ultimate car care experience with ceramic coating",
     image: "/img/pexels-karola-g-4870700.jpg",
     srcLight: "/img/pexels-karola-g-4870727.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&q=80",
     video: "https://cdn.coverr.co/videos/coverr-washing-a-black-car-5338/1080p.mp4",
+    popular: false,
     features: [
-      'All Services Included',
-      'Engine Bay Clean',
-      'Headlight Restoration',
-      '30-Day Guarantee'
+      'All Premium Services',
+      'Ceramic Coating',
+      'Paint Correction',
+      '90-Day Guarantee'
     ],
   }
 ];
@@ -159,49 +167,61 @@ export default function Services() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-5xl mx-auto text-center mb-24">
+        {/* Header */}
+        <div className="text-center mb-20">
+          {/* Badge */}
           <div
-            className="inline-flex items-center gap-2 mb-8"
+            className="inline-flex items-center gap-3 px-6 py-3 bg-primary/10 border border-primary/20 rounded-full mb-8 backdrop-blur-sm"
             style={{
               opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+              transform: isVisible ? 'translateY(0)' : 'translateY(-20px)',
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           >
-            <div className="h-px w-12 bg-primary" />
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-xs uppercase tracking-[0.25em] text-foreground/60 font-medium">
-              Our Services
+            <span className="text-sm uppercase tracking-[0.2em] text-primary font-bold">
+              Premium Services
             </span>
             <Sparkles className="w-4 h-4 text-primary" />
-            <div className="h-px w-12 bg-primary" />
           </div>
 
+          {/* Main Title */}
           <h2
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-foreground mb-8 leading-none tracking-tighter"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-foreground mb-6 leading-none tracking-tighter"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
               transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s'
             }}
           >
-            TOP TIER
-            <br />
-            <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent drop-shadow-lg">
-              SOLUTIONS
+            <span className="block">Luxury Detailing</span>
+            <span className="bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent drop-shadow-lg">
+              Packages
             </span>
           </h2>
 
+          {/* Description */}
           <p
-            className="text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed font-light mb-4"
             style={{
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s'
             }}
           >
-            Professional detailing services designed to protect and preserve your vehicle's beauty
+            Choose from our curated selection of professional detailing packages,
+            each designed to deliver exceptional results
+          </p>
+
+          {/* Pricing Note */}
+          <p
+            className="text-sm text-foreground/50 font-medium"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s'
+            }}
+          >
+            All prices in KES • Mobile service available across Nairobi
           </p>
         </div>
 
@@ -213,7 +233,7 @@ export default function Services() {
               ref={(el) => {
                 if (cardRefs[index]) cardRefs[index].current = el;
               }}
-              className="group relative overflow-hidden cursor-pointer perspective-1000 rounded-2xl"
+              className="group relative overflow-hidden cursor-pointer perspective-1000 rounded-2xl card-metallic-gold card-3d shimmer holographic-border"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeaveCard(index)}
               onMouseMove={(e) => handleMouseMove(e, index)}
@@ -280,13 +300,28 @@ export default function Services() {
                     transform: hoveredIndex === index ? 'translateY(-10px)' : 'translateY(0)'
                   }}
                 >
+                  {/* Popular Badge */}
+                  {service.popular && (
+                    <div className="absolute -top-3 right-6 px-4 py-1.5 bg-gradient-to-r from-primary to-primary-light rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-primary/50">
+                      Most Popular
+                    </div>
+                  )}
+
                   <div className="text-xs uppercase tracking-[0.25em] mb-2 text-primary/90 transition-all duration-300">
                     {service.subtitle}
                   </div>
-                  <h3 className="text-2xl font-black uppercase tracking-wide mb-3 drop-shadow-lg">
+                  <h3 className="text-2xl font-black uppercase tracking-wide mb-2 drop-shadow-lg">
                     {service.title}
                   </h3>
-                  <div className="text-4xl font-black text-white drop-shadow-lg">{service.price}</div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-sm text-white/60 font-medium">KES</span>
+                    <span className="text-4xl font-black text-white drop-shadow-lg">{service.price}</span>
+                  </div>
+                  {service.duration && (
+                    <div className="text-xs text-white/50 mt-1">
+                      {service.duration}
+                    </div>
+                  )}
                 </div>
 
                 {/* Hover Border Animation */}

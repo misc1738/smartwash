@@ -12,7 +12,7 @@ const MpesaPaymentExample = () => {
   const redirectedBooking = location.state?.booking || null;
   const [showPayment, setShowPayment] = useState(Boolean(redirectedBooking));
   const [paymentCompleted, setPaymentCompleted] = useState(false);
-  
+
   // Example booking details
   const bookingDetails = redirectedBooking || {
     service: 'Premium Wash',
@@ -26,17 +26,17 @@ const MpesaPaymentExample = () => {
   const handlePaymentSuccess = (paymentData) => {
     console.log('Payment successful:', paymentData);
     setPaymentCompleted(true);
-    
+
     // TODO: Update your booking status in database
     // TODO: Send confirmation email/SMS
     // TODO: Redirect to success page
-    
+
     // If this was a redirected booking, mark it as paid in the (mock) bookings service
     try {
       if (redirectedBooking && redirectedBooking.id) {
-        bookingsService.pay(redirectedBooking.id, 'mpesa').catch(() => {});
+        bookingsService.pay(redirectedBooking.id, 'mpesa').catch(() => { });
       }
-    } catch (_) {}
+    } catch (_) { }
 
     alert('Payment successful! Your booking is confirmed.');
   };
@@ -99,25 +99,25 @@ const MpesaPaymentExample = () => {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Booking Summary
           </h2>
-          
+
           <div className="space-y-4 mb-6">
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
               <p className="text-sm text-gray-600 dark:text-gray-400">Service</p>
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">{bookingDetails.service}</p>
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">{String(bookingDetails.service)}</p>
             </div>
-            
+
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
               <p className="text-sm text-gray-600 dark:text-gray-400">Vehicle</p>
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">{bookingDetails.vehicle}</p>
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">{String(bookingDetails.vehicle)}</p>
             </div>
-            
+
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
               <p className="text-sm text-gray-600 dark:text-gray-400">Date & Time</p>
               <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                {bookingDetails.date} at {bookingDetails.time}
+                {String(bookingDetails.date)} at {String(bookingDetails.time)}
               </p>
             </div>
-            
+
             <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
               <div className="flex justify-between items-center">
                 <span className="text-gray-600 dark:text-gray-300">Total Amount</span>
@@ -134,7 +134,7 @@ const MpesaPaymentExample = () => {
           >
             Proceed to Payment
           </button>
-          
+
           <button
             onClick={() => window.history.back()}
             className="w-full py-3 px-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors"
@@ -158,7 +158,7 @@ const MpesaPaymentExample = () => {
           </svg>
           Back to Summary
         </button>
-        
+
         <MpesaPayment
           amount={bookingDetails.amount}
           accountReference={bookingDetails.orderId}

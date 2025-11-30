@@ -20,8 +20,8 @@ export default function Navbar() {
   // Navbar items
   const navItems = [
     { id: "/", label: "Home" },
+    { id: "/about", label: "About" },
     { id: "/services", label: "Services" },
-    { id: "#how-it-works", label: "About" },
     { id: "#contact", label: "Contact" },
   ];
 
