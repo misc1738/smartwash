@@ -32,13 +32,13 @@ export default {
         glass: "rgba(10, 10, 10, 0.6)",
         "glass-border": "rgba(212, 175, 55, 0.2)",
         gold: {
-          100: "#F9F1D8",
-          200: "#F0DEAA",
-          300: "#E6CB7D",
-          400: "#D4AF37", // Base Gold
-          500: "#AA8C2C",
-          600: "#806921",
-          700: "#554616",
+          100: "#e0f2fe", // Sky 100
+          200: "#bae6fd", // Sky 200
+          300: "#7dd3fc", // Sky 300
+          400: "#3b82f6", // Blue 500 (Base "Gold" replacement)
+          500: "#2563eb", // Blue 600
+          600: "#1d4ed8", // Blue 700
+          700: "#1e40af", // Blue 800
         }
       },
       borderRadius: {
@@ -47,13 +47,13 @@ export default {
       boxShadow: {
         soft: "var(--shadow-soft)",
         hover: "var(--shadow-hover)",
-        glow: "0 0 20px rgba(212, 175, 55, 0.3)",
+        glow: "0 0 20px rgba(59, 130, 246, 0.5)",
       },
       backgroundImage: {
         "gradient-hero": "var(--gradient-hero)",
         "gradient-card": "var(--gradient-card)",
-        "gradient-gold": "linear-gradient(135deg, #F0DEAA 0%, #D4AF37 50%, #AA8C2C 100%)",
-        "gradient-dark": "linear-gradient(180deg, rgba(10,10,10,0) 0%, #0a0a0a 100%)",
+        "gradient-gold": "linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)",
+        "gradient-dark": "linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, #0f172a 100%)",
       },
       backdropBlur: {
         xs: '2px',

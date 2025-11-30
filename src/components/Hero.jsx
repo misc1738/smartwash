@@ -17,7 +17,7 @@ function ThemeHeroImage() {
     }
   });
 
-  const pickSrc = (t) => (t === 'light' ? '/img/hero2.png' : '/img/hero.png');
+  const pickSrc = (t) => (t === 'light' ? '/img/kenya-car-light.png' : '/img/kenya-car-dark.png');
 
   const [currentSrc, setCurrentSrc] = useState(() => pickSrc(theme));
   const [prevSrc, setPrevSrc] = useState(null);

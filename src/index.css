@@ -9,103 +9,107 @@
 
 :root {
   /* =========================================
-     LIGHT MODE: "Ruby Day"
-     Vibe: Passionate, Bold, High-End, Sporty
+     LIGHT MODE: "Azure Day"
+     Vibe: Professional, Clean, Trustworthy
      ========================================= */
   --background: 0 0% 98%;
   /* #FAFAFA - Crisp Porcelain */
-  --foreground: 0 0% 10%;
-  /* #1a1a1a - Jet Black */
+  --foreground: 222 47% 11%;
+  /* #0f172a - Slate 900 */
 
   --card: 0 0% 100%;
   /* #FFFFFF */
-  --card-foreground: 0 0% 10%;
+  --card-foreground: 222 47% 11%;
 
-  /* Primary: Luxury Red (Ruby/Crimson) */
-  --primary: 345 85% 50%;
-  /* #EC1338 - Vibrant Ruby Red */
+  /* Primary: Electric Blue */
+  --primary: 217 91% 60%;
+  /* #3b82f6 - Blue 500 */
   --primary-foreground: 0 0% 100%;
-  --primary-light: 345 90% 60%;
-  --primary-glow: 345 90% 70%;
+  --primary-light: 217 91% 70%;
+  --primary-glow: 217 91% 80%;
 
-  --accent: 0 0% 90%;
-  /* #E5E5E5 */
-  --accent-foreground: 0 0% 10%;
+  --accent: 199 89% 48%;
+  /* #0ea5e9 - Sky 500 */
+  --accent-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 96%;
-  /* #F5F5F5 */
-  --secondary-foreground: 0 0% 10%;
+  --secondary: 210 40% 96%;
+  /* #f1f5f9 - Slate 100 */
+  --secondary-foreground: 222 47% 11%;
 
-  --muted: 0 0% 90%;
-  --muted-foreground: 0 0% 40%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --ring: 345 85% 50%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 217 91% 60%;
 
   --radius: 0.5rem;
 
   /* Light Gradients */
-  --gradient-hero: linear-gradient(135deg, #FAFAFA 0%, #F0F0F0 100%);
-  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
-  --gradient-gold: linear-gradient(135deg, #FF4D6D 0%, #EC1338 50%, #C9102F 100%);
-  /* Red Gradient */
+  --gradient-hero: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #f8fafc 100%);
+  --gradient-gold: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  /* Blue Gradient (replaces gold) */
 
-  --shadow-soft: 0 8px 30px -6px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 12px 40px -8px rgba(236, 19, 56, 0.25);
+  --shadow-soft: 0 8px 30px -6px rgba(59, 130, 246, 0.1);
+  --shadow-hover: 0 12px 40px -8px rgba(59, 130, 246, 0.25);
 
   --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* =========================================
-   DARK MODE: "Midnight Gold"
-   Vibe: Exclusive, Night-time, VIP, Mysterious
+   DARK MODE: "Midnight Blue"
+   Vibe: Tech, Futuristic, Deep, Premium
    ========================================= */
 .dark {
-  --background: 0 0% 4%;
-  /* #0a0a0a - Deep Onyx */
-  --foreground: 46 30% 95%;
-  /* #F9F1D8 - Pale Gold Text */
+  --background: 0 0% 0%;
+  /* #000000 - Pure Deep Black */
+  --foreground: 210 40% 98%;
+  /* #f8fafc - Slate 50 */
 
-  --card: 0 0% 7%;
-  /* #121212 */
-  --card-foreground: 46 30% 95%;
+  --card: 222 47% 6%;
+  /* #050b14 - Very Dark Blue/Black */
+  --card-foreground: 210 40% 98%;
 
-  /* Primary: Rich Metallic Gold */
-  --primary: 46 65% 52%;
-  /* #D4AF37 - Classic Gold */
-  --primary-foreground: 0 0% 0%;
-  --primary-light: 46 70% 60%;
-  --primary-glow: 46 70% 70%;
+  /* Primary: Neon Blue */
+  --primary: 217 91% 60%;
+  /* #3b82f6 - Blue 500 */
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 217 91% 70%;
+  --primary-glow: 217 100% 60%;
+  /* Intense Blue Glow */
 
-  --accent: 46 65% 52%;
-  --accent-foreground: 0 0% 0%;
+  --accent: 199 89% 48%;
+  /* #0ea5e9 - Sky 500 */
+  --accent-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 15%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 222 47% 8%;
+  --secondary-foreground: 210 40% 98%;
 
-  --muted: 0 0% 20%;
-  --muted-foreground: 0 0% 60%;
+  --muted: 222 47% 8%;
+  --muted-foreground: 215 20% 65%;
 
-  --destructive: 0 84% 60%;
+  --destructive: 0 62% 30%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 46 65% 20%;
-  /* Subtle gold border */
-  --input: 0 0% 15%;
-  --ring: 46 65% 52%;
+  --border: 217 91% 60%;
+  /* Blue Border for Glow Effect */
+  --input: 222 47% 10%;
+  --ring: 217 91% 60%;
 
   /* Dark Gradients */
-  --gradient-hero: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  --gradient-gold: linear-gradient(135deg, #F0DEAA 0%, #D4AF37 50%, #AA8C2C 100%);
-  /* Rich Gold Gradient */
+  --gradient-hero: linear-gradient(135deg, #000000 0%, #050505 100%);
+  --gradient-card: linear-gradient(180deg, rgba(5, 11, 20, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  --gradient-gold: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  /* Blue Gradient */
 
-  --shadow-soft: 0 8px 30px -6px rgba(0, 0, 0, 0.5);
-  --shadow-hover: 0 12px 40px -8px rgba(212, 175, 55, 0.15);
+  --shadow-soft: 0 0 20px -5px rgba(59, 130, 246, 0.15);
+  /* Blue ambient glow */
+  --shadow-hover: 0 0 40px -5px rgba(59, 130, 246, 0.4);
+  /* Stronger blue glow */
 }
 
 body {

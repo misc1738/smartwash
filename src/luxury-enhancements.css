@@ -5,38 +5,53 @@
 
 /* Expanded Color Palette */
 :root {
-    /* Dark Mode - Midnight Gold Expanded */
-    --gold-bright: 45 100% 60%;
-    --gold-standard: 43 74% 49%;
-    --gold-dark: 43 74% 35%;
-    --bronze: 30 50% 40%;
-    --champagne: 48 80% 75%;
-    --amber: 38 100% 50%;
-    --burgundy: 0 63% 31%;
+    /* Dark Mode - Midnight Blue Expanded */
+    --gold-bright: 217 100% 75%;
+    /* Bright Blue */
+    --gold-standard: 217 91% 60%;
+    /* Standard Blue */
+    --gold-dark: 217 91% 40%;
+    /* Dark Blue */
+    --bronze: 215 50% 40%;
+    /* Slate Blue */
+    --champagne: 210 80% 90%;
+    /* Pale Blue */
+    --amber: 199 100% 50%;
+    /* Cyan */
+    --burgundy: 222 47% 20%;
+    /* Deep Navy */
 
-    /* Light Mode - Ruby Day Expanded */
-    --ruby-bright: 348 83% 58%;
-    --ruby-standard: 348 83% 47%;
-    --ruby-dark: 348 100% 25%;
-    --rose: 350 100% 70%;
-    --coral: 16 100% 66%;
-    --blush: 340 82% 85%;
-    --rose-gold: 25 76% 65%;
+    /* Light Mode - Azure Day Expanded */
+    --ruby-bright: 199 89% 60%;
+    /* Sky Blue */
+    --ruby-standard: 217 91% 60%;
+    /* Royal Blue */
+    --ruby-dark: 222 47% 30%;
+    /* Navy */
+    --rose: 210 100% 85%;
+    /* Light Blue */
+    --coral: 180 100% 40%;
+    /* Teal */
+    --blush: 210 80% 95%;
+    /* Ice Blue */
+    --rose-gold: 200 70% 70%;
+    /* Steel Blue */
 
     /* Metallic Effects */
+    /* Metallic Effects - Prime Glowy Edition */
     --gold-metallic: linear-gradient(135deg,
-            hsl(48, 100%, 88%) 0%,
-            hsl(43, 74%, 49%) 25%,
-            hsl(45, 100%, 60%) 50%,
-            hsl(43, 74%, 49%) 75%,
-            hsl(48, 100%, 88%) 100%);
+            hsl(210, 100%, 95%) 0%,
+            hsl(217, 100%, 60%) 25%,
+            hsl(190, 100%, 80%) 50%,
+            hsl(217, 100%, 60%) 75%,
+            hsl(210, 100%, 95%) 100%);
 
     --ruby-metallic: linear-gradient(135deg,
-            hsl(350, 100%, 75%) 0%,
-            hsl(348, 83%, 47%) 25%,
-            hsl(348, 83%, 58%) 50%,
-            hsl(348, 83%, 47%) 75%,
-            hsl(350, 100%, 75%) 100%);
+            hsl(200, 100%, 90%) 0%,
+            hsl(220, 100%, 60%) 25%,
+            hsl(180, 100%, 70%) 50%,
+            hsl(220, 100%, 60%) 75%,
+            hsl(200, 100%, 90%) 100%);
 
     /* Texture Overlays */
     --grain-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
