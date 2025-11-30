@@ -7,13 +7,13 @@ class MpesaService {
     this.passkey = process.env.MPESA_PASSKEY;
     this.shortcode = process.env.MPESA_SHORTCODE;
     this.environment = process.env.MPESA_ENVIRONMENT || 'sandbox';
-    this.callbackUrl = process.env.MPESA_CALLBACK_URL;
-    
+    this.callbackUrl = process.env.MPESA_CALLBACK_URL || 'https://example.com/callback';
+
     // Set base URL based on environment
-    this.baseURL = this.environment === 'production' 
-      ? 'https://api.safaricom.co.ke' 
+    this.baseURL = this.environment === 'production'
+      ? 'https://api.safaricom.co.ke'
       : 'https://sandbox.safaricom.co.ke';
-    
+
     this.accessToken = null;
     this.tokenExpiry = null;
   }
@@ -29,7 +29,7 @@ class MpesaService {
       }
 
       const auth = Buffer.from(`${this.consumerKey}:${this.consumerSecret}`).toString('base64');
-      
+
       const response = await axios.get(
         `${this.baseURL}/oauth/v1/generate?grant_type=client_credentials`,
         {

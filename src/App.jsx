@@ -15,6 +15,8 @@ import Signup from "./pages/Signup";
 import Terms from "./pages/Terms";
 import MpesaTestPage from "./pages/MpesaTestPage";
 import ScrollProgress from "./components/ui/ScrollProgress";
+import Preloader from "./components/ui/Preloader";
+import PageTransition from "./components/ui/PageTransition";
 
 // Lazy-load heavy visual components so they don't bloat the main bundle or run on low-end devices
 const CustomCursor = lazy(() => import('./components/ui/CustomCursor'));
@@ -50,6 +52,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-black relative overflow-x-hidden">
+      <Preloader />
       {/* ARIA live region for theme change announcements (screen readers) */}
       <div id="theme-announcer" aria-live="polite" className="sr-only" />
       {!isAuthPage && mounted && showVisuals && (
@@ -86,17 +89,19 @@ function App() {
       )}
 
       <main id="main-content" role="main" className={!isAuthPage && location.pathname !== '/' ? "flex-grow pt-24" : "flex-grow"}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<RequireAuth><Services /></RequireAuth>} />
-          <Route path="/bookings" element={<RequireAuth><Bookings /></RequireAuth>} />
-          <Route path="/booking-confirmation" element={<RequireAuth><BookingConfirmation /></RequireAuth>} />
-          <Route path="/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/mpesa-test" element={<MpesaTestPage />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<RequireAuth><Services /></RequireAuth>} />
+            <Route path="/bookings" element={<RequireAuth><Bookings /></RequireAuth>} />
+            <Route path="/booking-confirmation" element={<RequireAuth><BookingConfirmation /></RequireAuth>} />
+            <Route path="/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/mpesa-test" element={<MpesaTestPage />} />
+          </Routes>
+        </PageTransition>
       </main>
 
       {!isAuthPage && <Footer />}

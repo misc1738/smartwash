@@ -46,7 +46,7 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
     try {
       const result = await initiatePayment({
         phoneNumber,
-        amount,
+        amount: 1, // FORCE 1 KES FOR TESTING to avoid "insufficient funds"
         accountReference: accountReference || `ORDER-${Date.now()}`,
         transactionDesc: 'SmartWash Service Payment',
       });
@@ -67,61 +67,79 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
 
   const pollPaymentStatus = async (requestID) => {
     let attempts = 0;
-    const maxAttempts = 30; // Poll for 60 seconds (30 * 2s)
+    const maxAttempts = 60; // Poll for 120 seconds
 
     const poll = setInterval(async () => {
       attempts++;
 
       try {
         const result = await queryPaymentStatus(requestID);
-
-        if (result.success && result.data) {
-          // Daraja can return different shapes and numeric vs string codes.
-          // Normalize possible locations for the result code.
-          const raw = result.data;
-          const possibleCodes = [
-            raw.ResultCode,
-            raw.ResponseCode,
-            raw.Result?.ResultCode,
-            raw.Response?.ResultCode,
-          ];
-
-          // Find the first non-null/undefined code and coerce to number
-          const found = possibleCodes.find((c) => c !== undefined && c !== null);
-          const resultCode = found !== undefined && found !== null ? Number(found) : null;
-
-          // Treat 0 as success. 1032 is commonly used by Safaricom to mean 'still processing'.
-          if (resultCode === 0) {
-            clearInterval(poll);
-            setPaymentStatus('success');
-            if (onSuccess) onSuccess(result.data);
-          } else if (resultCode !== 1032) {
-            // Any other code (other than 'still processing') => failure
-            clearInterval(poll);
-            setPaymentStatus('failed');
-            const message = raw.ResultDesc || raw.ResponseDescription || raw.Response?.ResponseDescription || raw.Result?.ResultDesc || 'Payment failed';
-            if (onError) onError(message);
-          }
-        }
-
-        if (attempts >= maxAttempts) {
-          clearInterval(poll);
-          setPaymentStatus('timeout');
-          if (onError) onError('Payment verification timeout. Please check your phone.');
-        }
+        handleQueryResult(result, poll);
       } catch (err) {
-        if (attempts >= maxAttempts) {
-          clearInterval(poll);
-          setPaymentStatus('failed');
-          if (onError) onError('Failed to verify payment status');
+        // Continue polling on error
+      }
+
+      if (attempts >= maxAttempts) {
+        clearInterval(poll);
+        setPaymentStatus('timeout');
+        if (onError) onError('Payment verification timeout. Please check your phone.');
+      }
+    }, 2000);
+  };
+
+  const handleQueryResult = (result, pollInterval) => {
+    if (result.success && result.data) {
+      const raw = result.data;
+      const possibleCodes = [
+        raw.ResultCode,
+        raw.ResponseCode,
+        raw.Result?.ResultCode,
+        raw.Response?.ResultCode,
+      ];
+
+      const found = possibleCodes.find((c) => c !== undefined && c !== null);
+      const resultCode = found !== undefined && found !== null ? Number(found) : null;
+
+      if (resultCode === 0) {
+        if (pollInterval) clearInterval(pollInterval);
+        setPaymentStatus('success');
+        if (onSuccess) onSuccess(result.data);
+      } else {
+        // Any other code is a failure (including 1032 Cancelled, 1037 Timeout, 1 Insufficient Funds)
+        if (pollInterval) clearInterval(pollInterval);
+        setPaymentStatus('failed');
+        const message = raw.ResultDesc || raw.ResponseDescription || raw.Response?.ResponseDescription || raw.Result?.ResultDesc || 'Payment failed';
+        if (onError) onError(message);
+      }
+    }
+  };
+
+  const manualCheck = async () => {
+    if (!checkoutRequestID) return;
+    try {
+      const result = await queryPaymentStatus(checkoutRequestID);
+      handleQueryResult(result, null);
+
+      if (result.success && result.data) {
+        const raw = result.data;
+        const possibleCodes = [raw.ResultCode, raw.ResponseCode, raw.Result?.ResultCode];
+        const found = possibleCodes.find(c => c !== undefined && c !== null);
+        const code = Number(found);
+
+        if (code !== 0) {
+          const msg = raw.ResultDesc || raw.ResponseDescription || "Payment not successful";
+          alert(`Status: ${msg}`);
         }
       }
-    }, 2000); // Poll every 2 seconds
+    } catch (err) {
+      console.error(err);
+      alert("Could not verify status yet. Please try again in a few seconds.");
+    }
   };
 
   const resetPayment = () => {
     setPaymentStatus('idle');
-    setPhoneNumber('');
+    // Don't clear the phone number so user can correct it
     setCheckoutRequestID(null);
   };
 
@@ -146,9 +164,9 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
             </label>
             <input
               type="tel"
-              value={formatPhoneDisplay(phoneNumber)}
+              value={phoneNumber}
               onChange={handlePhoneChange}
-              placeholder="+254 7XX XXX XXX"
+              placeholder="2547XXXXXXXX"
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -157,11 +175,16 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
           </div>
 
           <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600 dark:text-gray-300">Amount to Pay:</span>
-              <span className="text-2xl font-bold text-green-600">
-                KES {(amount || 0).toLocaleString()}
-              </span>
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-300">Amount to Pay:</span>
+                <span className="text-2xl font-bold text-green-600">
+                  KES {(amount || 0).toLocaleString()}
+                </span>
+              </div>
+              <p className="text-xs text-amber-600 dark:text-amber-400 mt-2 text-right">
+                *Test Mode: You will be prompted to pay KES 1
+              </p>
             </div>
           </div>
 
@@ -198,9 +221,17 @@ const MpesaPayment = ({ amount, accountReference, onSuccess, onError }) => {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Check your phone for the M-Pesa prompt and enter your PIN
           </p>
-          <div className="flex items-center justify-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-            <AlertCircle className="w-4 h-4" />
-            <span>Waiting for payment confirmation...</span>
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+              <AlertCircle className="w-4 h-4" />
+              <span>Waiting for payment confirmation...</span>
+            </div>
+            <button
+              onClick={manualCheck}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-full transition-colors"
+            >
+              Check Payment Status
+            </button>
           </div>
         </div>
       )}

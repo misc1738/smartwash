@@ -17,7 +17,7 @@ function ThemeHeroImage() {
     }
   });
 
-  const pickSrc = (t) => (t === 'light' ? '/img/hero2.jpg' : '/img/hero.jpg');
+  const pickSrc = (t) => (t === 'light' ? '/img/hero2.png' : '/img/hero.png');
 
   const [currentSrc, setCurrentSrc] = useState(() => pickSrc(theme));
   const [prevSrc, setPrevSrc] = useState(null);

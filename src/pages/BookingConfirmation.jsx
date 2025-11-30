@@ -59,9 +59,16 @@ export default function BookingConfirmation() {
     // Redirect to the M-Pesa payment flow so the customer can complete STK Push
     // The payment page will mark the booking as paid once the STK push completes.
     try {
-      const params = { booking };
+      const paymentBooking = {
+        ...booking,
+        amount: booking.totalPrice,
+        service: booking.package?.title || booking.service,
+        vehicle: booking.vehicle?.label || booking.vehicle,
+        // Ensure we have a string for the order ID/account reference
+        orderId: booking.id || `SW-${Date.now()}`
+      };
       // Navigate to the /mpesa-test route which hosts the payment component
-      navigate('/mpesa-test', { state: params });
+      navigate('/mpesa-test', { state: { booking: paymentBooking } });
     } catch (err) {
       console.error('Failed to start payment flow', err);
       alert('Failed to start payment flow');
@@ -88,7 +95,7 @@ export default function BookingConfirmation() {
       <div className="absolute inset-0">
         <ShaderAnimation />
       </div>
-      
+
       {/* Dark Overlay for readability */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
@@ -110,7 +117,7 @@ export default function BookingConfirmation() {
                 to={{ opacity: 1, y: 0 }}
               />
             </div>
-            
+
             <p className="text-xl text-white/70 max-w-xl mx-auto mt-2 md:mt-3">
               We've received your booking and will contact you shortly to confirm the details.
             </p>
@@ -205,7 +212,7 @@ export default function BookingConfirmation() {
                 <span>Pay with M-Pesa (Mock)</span>
               </button>
             )}
-            <button 
+            <button
               onClick={handleDownloadReceipt}
               disabled={downloadingPdf}
               className="flex items-center justify-center gap-2 px-6 py-4 bg-white/5 border border-white/10 text-white hover:border-primary/50 hover:bg-primary/10 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
@@ -217,7 +224,7 @@ export default function BookingConfirmation() {
               <Share2 className="w-5 h-5" />
               <span>Share Booking</span>
             </button>
-            <Link 
+            <Link
               to="/bookings"
               className="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-white transition-all font-bold uppercase tracking-wide"
             >
