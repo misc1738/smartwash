@@ -35,11 +35,11 @@ export default function SearchSelect({
 
   return (
     <div ref={rootRef} className={`relative ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`}>
-      <div className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 text-white backdrop-blur-sm focus-within:border-primary/50 transition-all">
-        <Search className="w-4 h-4 text-white/50" />
+      <div className="flex items-center gap-2 px-3 py-2 bg-input border border-border text-foreground backdrop-blur-sm focus-within:border-primary/50 transition-all rounded-lg">
+        <Search className="w-4 h-4 text-muted-foreground" />
         <input
           type="text"
-          className="flex-1 bg-transparent outline-none text-white placeholder:text-white/40"
+          className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
           placeholder={value || placeholder}
           value={query}
           onChange={(e) => {
@@ -48,14 +48,14 @@ export default function SearchSelect({
           }}
           onFocus={() => setOpen(true)}
         />
-        <button type="button" className="text-white/60" onClick={() => setOpen((s) => !s)}>
+        <button type="button" className="text-muted-foreground hover:text-foreground transition-colors" onClick={() => setOpen((s) => !s)}>
           <ChevronsUpDown className="w-4 h-4" />
         </button>
       </div>
       {open && (
-        <div className="absolute z-30 mt-1 w-full max-h-56 overflow-auto bg-black/90 border border-white/10 backdrop-blur-xl shadow-xl">
+        <div className="absolute z-30 mt-1 w-full max-h-56 overflow-auto bg-card border border-border backdrop-blur-xl shadow-xl rounded-lg">
           {filtered.length === 0 ? (
-            <div className="px-3 py-2 text-white/50 text-sm">No matches</div>
+            <div className="px-3 py-2 text-muted-foreground text-sm">No matches</div>
           ) : (
             filtered.map((opt) => (
               <button
@@ -65,9 +65,8 @@ export default function SearchSelect({
                   onChange && onChange(opt);
                   setOpen(false);
                 }}
-                className={`w-full text-left px-3 py-2 text-sm ${
-                  opt === value ? 'bg-primary/20 text-primary' : 'text-white hover:bg-white/10'
-                }`}
+                className={`w-full text-left px-3 py-2 text-sm transition-colors ${opt === value ? 'bg-primary/20 text-primary' : 'text-foreground hover:bg-secondary'
+                  }`}
               >
                 {opt}
               </button>

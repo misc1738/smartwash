@@ -18,41 +18,41 @@ export default function BookingDrawer({ open, onClose, initial }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm" 
+      <div
+        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
         onClick={() => handleClose()}
       ></div>
-      
+
       {/* Drawer Content */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-black/90 border border-white/10 backdrop-blur-xl shadow-2xl">
+      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-background border border-border backdrop-blur-xl shadow-2xl rounded-2xl">
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-gradient-to-r from-black via-gray-900 to-black border-b border-white/10 backdrop-blur-xl">
+        <div className="sticky top-0 z-10 bg-gradient-to-r from-background via-secondary to-background border-b border-border backdrop-blur-xl">
           <div className="flex justify-between items-center p-6">
             <div>
-              <h3 className="text-2xl md:text-3xl font-black text-white">
+              <h3 className="text-2xl md:text-3xl font-black text-foreground">
                 {initial?.id ? 'Edit Booking' : `Book ${initial?.title || 'Your Service'}`}
               </h3>
-              <p className="text-white/60 text-sm mt-1">
+              <p className="text-muted-foreground text-sm mt-1">
                 {initial?.id ? 'Update your booking details' : "Fill in your details and we'll come to you"}
               </p>
             </div>
-            <button 
-              type="button" 
-              onClick={() => handleClose()} 
+            <button
+              type="button"
+              onClick={() => handleClose()}
               aria-label="Close"
-              className="p-2 hover:bg-white/10 transition-colors border border-white/20 hover:border-primary/50"
+              className="p-2 hover:bg-secondary transition-colors border border-border hover:border-primary/50 rounded-full"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6 text-foreground" />
             </button>
           </div>
         </div>
 
         {/* Form Content */}
         <div className="p-6 md:p-8">
-          <BookingForm 
-            initial={initial?.id ? initial : { service: initial?.key }} 
+          <BookingForm
+            initial={initial?.id ? initial : { service: initial?.key }}
             onDirtyChange={setDirty}
-            onSaved={(b) => { handleClose(b); }} 
+            onSaved={(b) => { handleClose(b); }}
           />
         </div>
       </div>

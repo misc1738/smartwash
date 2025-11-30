@@ -288,7 +288,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Service Selection */}
       <div className="space-y-3">
-        <label className="flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider">
+        <label className="flex items-center gap-2 text-foreground font-bold text-sm uppercase tracking-wider">
           <Sparkles className="w-4 h-4 text-primary" />
           Select Service
         </label>
@@ -297,9 +297,9 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             <label
               key={service.value}
               className={`relative cursor-pointer group transition-all duration-300 ${form.service === service.value
-                  ? 'bg-primary/20 border-primary/50'
-                  : 'bg-white/5 border-white/10 hover:border-primary/30'
-                } border-2 backdrop-blur-sm p-4 flex flex-col`}
+                ? 'bg-primary/20 border-primary/50'
+                : 'bg-card border-border hover:border-primary/30'
+                } border-2 backdrop-blur-sm p-4 flex flex-col rounded-xl`}
             >
               <input
                 type="radio"
@@ -310,7 +310,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
                 className="sr-only"
               />
               <div className="flex items-start justify-between mb-2">
-                <span className="font-bold text-white text-lg">{service.label}</span>
+                <span className="font-bold text-foreground text-lg">{service.label}</span>
                 {form.service === service.value && (
                   <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
                     <div className="w-2 h-2 rounded-full bg-white"></div>
@@ -319,7 +319,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-primary font-bold">{service.price}</span>
-                <span className="text-white/60">{service.duration}</span>
+                <span className="text-muted-foreground">{service.duration}</span>
               </div>
             </label>
           ))}
@@ -329,7 +329,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       {/* Personal Information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <User className="w-4 h-4 text-primary" />
             Full Name
           </label>
@@ -342,13 +342,13 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             placeholder="John Doe"
             aria-invalid={!!fieldErrors.name}
             aria-describedby={fieldErrors.name ? 'err-name' : undefined}
-            className={`w-full px-4 py-3 bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+            className={`w-full px-4 py-3 bg-input border ${fieldErrors.name ? 'border-red-500' : 'border-border'} text-foreground placeholder:text-muted-foreground backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all rounded-lg`}
           />
           {fieldErrors.name && <div id="err-name" className="text-xs text-red-300 mt-1">{fieldErrors.name}</div>}
         </div>
 
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <Phone className="w-4 h-4 text-primary" />
             Phone Number
           </label>
@@ -366,7 +366,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             placeholder="+254 700 000 000"
             aria-invalid={!!fieldErrors.phone}
             aria-describedby={fieldErrors.phone ? 'err-phone' : undefined}
-            className={`w-full px-4 py-3 bg-white/5 border ${fieldErrors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+            className={`w-full px-4 py-3 bg-input border ${fieldErrors.phone ? 'border-red-500' : 'border-border'} text-foreground placeholder:text-muted-foreground backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all rounded-lg`}
           />
           {fieldErrors.phone && <div id="err-phone" className="text-xs text-red-300 mt-1">{fieldErrors.phone}</div>}
         </div>
@@ -375,7 +375,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       {/* Vehicle */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <Car className="w-4 h-4 text-primary" />
             Make
           </label>
@@ -390,7 +390,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
           </div>
         </div>
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <Car className="w-4 h-4 text-primary" />
             Model
           </label>
@@ -410,12 +410,12 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
           {/* Show derived category below the model input to avoid pushing the model dropdown */}
           {form.vehicle.category && (
             <div className="mt-2">
-              <span className="inline-block text-xs px-2 py-1 bg-white/5 text-white/70 rounded">{form.vehicle.category}</span>
+              <span className="inline-block text-xs px-2 py-1 bg-secondary text-muted-foreground rounded">{form.vehicle.category}</span>
             </div>
           )}
         </div>
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <Hash className="w-4 h-4 text-primary" />
             Plate
           </label>
@@ -431,13 +431,13 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             placeholder="KDA 123A"
             aria-invalid={!!fieldErrors.vehiclePlate}
             aria-describedby={fieldErrors.vehiclePlate ? 'err-plate' : undefined}
-            className={`w-full px-4 py-3 bg-white/5 border text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${(fieldErrors.vehiclePlate || (!isPlateValid && plateTouched)) ? 'border-red-500' : 'border-white/10'
+            className={`w-full px-4 py-3 bg-input border text-foreground placeholder:text-muted-foreground backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all rounded-lg ${(fieldErrors.vehiclePlate || (!isPlateValid && plateTouched)) ? 'border-red-500' : 'border-border'
               }`}
           />
           {fieldErrors.vehiclePlate ? (
             <div id="err-plate" className="text-xs text-red-300 mt-1">{fieldErrors.vehiclePlate}</div>
           ) : (
-            <p className={`text-xs mt-1 ${isPlateValid ? 'text-white/40' : 'text-red-300'}`}>
+            <p className={`text-xs mt-1 ${isPlateValid ? 'text-muted-foreground' : 'text-red-300'}`}>
               {isPlateValid ? 'Format: KDA 123A' : 'Please use the format KDA 123A'}
             </p>
           )}
@@ -447,19 +447,19 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       {/* Saved Vehicles */}
       {vehicles.length > 0 && (
         <div className="space-y-2">
-          <label className="text-white font-semibold text-sm">Saved Vehicles</label>
+          <label className="text-foreground font-semibold text-sm">Saved Vehicles</label>
           <div className="flex flex-wrap gap-2">
             {vehicles.map((v, idx) => (
               <button
                 type="button"
                 key={`${v.plate}-${idx}`}
                 onClick={() => setForm((s) => ({ ...s, vehicle: { ...v } }))}
-                className={`px-3 py-1 text-sm border ${form.vehicle.plate === v.plate ? 'border-primary/60 bg-primary/10 text-primary' : 'border-white/10 text-white/70 hover:border-primary/40'
+                className={`px-3 py-1 text-sm border rounded-full ${form.vehicle.plate === v.plate ? 'border-primary/60 bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/40'
                   }`}
               >
                 <span className="font-semibold">{v.make} {v.model}</span>
-                <span className="text-xs text-white/50 ml-2">{v.category ? `• ${v.category}` : ''}</span>
-                <span className="text-white/40 ml-3">{v.plate}</span>
+                <span className="text-xs text-muted-foreground/70 ml-2">{v.category ? `• ${v.category}` : ''}</span>
+                <span className="text-muted-foreground/50 ml-3">{v.plate}</span>
               </button>
             ))}
           </div>
@@ -467,14 +467,14 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       )}
 
       {/* Save vehicle toggle */}
-      <label className="flex items-center gap-3 text-white/80 text-sm">
-        <input type="checkbox" checked={saveVehicle} onChange={(e) => setSaveVehicle(e.target.checked)} />
+      <label className="flex items-center gap-3 text-foreground/80 text-sm cursor-pointer">
+        <input type="checkbox" checked={saveVehicle} onChange={(e) => setSaveVehicle(e.target.checked)} className="accent-primary" />
         Save this vehicle for faster booking next time
       </label>
 
       {/* Location */}
       <div className="space-y-2">
-        <label className="flex items-center gap-2 text-white font-semibold text-sm">
+        <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
           <MapPin className="w-4 h-4 text-primary" />
           Service Location
         </label>
@@ -485,13 +485,13 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             value={form.location}
             onChange={handleChange}
             placeholder="e.g. 12 Riverside Drive, Westlands, Nairobi"
-            className="flex-1 px-4 py-3 bg-white/5 border border-white/10 text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            className="flex-1 px-4 py-3 bg-input border border-border text-foreground placeholder:text-muted-foreground backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all rounded-lg"
           />
           <button
             type="button"
             onClick={handleUseMyLocation}
             disabled={locationLoading}
-            className="px-4 py-3 bg-primary/20 border border-primary/30 text-primary hover:bg-primary/30 transition-all backdrop-blur-sm disabled:opacity-50 flex items-center gap-2"
+            className="px-4 py-3 bg-primary/20 border border-primary/30 text-primary hover:bg-primary/30 transition-all backdrop-blur-sm disabled:opacity-50 flex items-center gap-2 rounded-lg"
             title="Use my current location"
           >
             <Navigation className={`w-5 h-5 ${locationLoading ? 'animate-spin' : ''}`} />
@@ -499,7 +499,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
           </button>
         </div>
         {geoLocation && !geoLocation.fallback && (
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-muted-foreground">
             📍 Detected: {geoLocation.city}, {geoLocation.country}
           </p>
         )}
@@ -509,7 +509,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       {/* Date and Time */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <Calendar className="w-4 h-4 text-primary" />
             Preferred Date
           </label>
@@ -520,13 +520,13 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             onChange={handleChange}
             placeholder="+254 700 000 000"
             onBlur={handlePhoneBlur}
-            className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            className="w-full px-4 py-3 bg-input border border-border text-foreground backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all rounded-lg"
           />
           {fieldErrors.phone && <p className="text-xs text-red-300 mt-1">{fieldErrors.phone}</p>}
         </div>
 
         <div className="space-y-2">
-          <label className="flex items-center gap-2 text-white font-semibold text-sm">
+          <label className="flex items-center gap-2 text-foreground font-semibold text-sm">
             <Calendar className="w-4 h-4 text-primary" />
             Preferred Time
           </label>
@@ -534,11 +534,11 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             name="time"
             value={form.time}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            className="w-full px-4 py-3 bg-input border border-border text-foreground backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all rounded-lg"
           >
-            <option value="" className="bg-gray-900">{form.date ? 'Select time' : 'Select a date first'}</option>
+            <option value="" className="bg-card">{form.date ? 'Select time' : 'Select a date first'}</option>
             {availableTimes.map((t) => (
-              <option key={t} value={t} className="bg-gray-900">{t}</option>
+              <option key={t} value={t} className="bg-card">{t}</option>
             ))}
           </select>
         </div>
@@ -546,11 +546,11 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
 
       {/* Weather Warning */}
       {weather && weather.warning && !weather.fallback && (
-        <div className="bg-yellow-500/20 border border-yellow-500/40 backdrop-blur-sm p-4 flex items-start gap-3">
+        <div className="bg-yellow-500/20 border border-yellow-500/40 backdrop-blur-sm p-4 flex items-start gap-3 rounded-lg">
           <CloudRain className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
           <div>
             <div className="text-yellow-300 font-bold text-sm mb-1">Weather Advisory</div>
-            <div className="text-white/80 text-sm">
+            <div className="text-foreground/80 text-sm">
               {weather.icon} {weather.warning}. We recommend choosing an alternative time for the best service quality.
             </div>
           </div>
@@ -559,16 +559,16 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
 
       {/* Add-ons */}
       <div className="space-y-3">
-        <label className="flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider">
+        <label className="flex items-center gap-2 text-foreground font-bold text-sm uppercase tracking-wider">
           <Sparkles className="w-4 h-4 text-primary" />
           Add-ons
         </label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {addOns.map((a) => (
-            <label key={a.key} className={`flex items-center justify-between gap-3 border p-4 backdrop-blur-sm cursor-pointer ${form.addOns.includes(a.key) ? 'bg-primary/20 border-primary/40' : 'bg-white/5 border-white/10 hover:border-primary/30'}`}>
+            <label key={a.key} className={`flex items-center justify-between gap-3 border p-4 backdrop-blur-sm cursor-pointer rounded-lg ${form.addOns.includes(a.key) ? 'bg-primary/20 border-primary/40' : 'bg-card border-border hover:border-primary/30'}`}>
               <div className="flex items-center gap-3">
-                <input type="checkbox" checked={form.addOns.includes(a.key)} onChange={() => toggleAddon(a.key)} />
-                <span className="text-white">{a.label}</span>
+                <input type="checkbox" checked={form.addOns.includes(a.key)} onChange={() => toggleAddon(a.key)} className="accent-primary" />
+                <span className="text-foreground">{a.label}</span>
               </div>
               <span className="text-primary font-bold">KSh {a.price.toLocaleString()}</span>
             </label>
@@ -578,24 +578,24 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
 
       {/* Booking Summary */}
       {selectedService && form.date && form.time && (
-        <div className="bg-gradient-to-r from-primary/20 to-cyan-500/20 border border-primary/30 backdrop-blur-sm p-6 space-y-3">
-          <h4 className="text-white font-bold text-lg mb-3">Booking Summary</h4>
+        <div className="bg-gradient-to-r from-primary/10 to-cyan-500/10 border border-primary/20 backdrop-blur-sm p-6 space-y-3 rounded-xl">
+          <h4 className="text-foreground font-bold text-lg mb-3">Booking Summary</h4>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-white/70">Service:</span>
-              <span className="text-white font-semibold">{selectedService.label}</span>
+              <span className="text-muted-foreground">Service:</span>
+              <span className="text-foreground font-semibold">{selectedService.label}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-white/70">Duration:</span>
-              <span className="text-white font-semibold">{selectedService.duration}</span>
+              <span className="text-muted-foreground">Duration:</span>
+              <span className="text-foreground font-semibold">{selectedService.duration}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-white/70">Date & Time:</span>
-              <span className="text-white font-semibold">{form.date} at {form.time}</span>
+              <span className="text-muted-foreground">Date & Time:</span>
+              <span className="text-foreground font-semibold">{form.date} at {form.time}</span>
             </div>
-            <div className="border-t border-white/20 pt-2 mt-2">
+            <div className="border-t border-border pt-2 mt-2">
               <div className="flex justify-between items-center">
-                <span className="text-white font-bold">Total:</span>
+                <span className="text-foreground font-bold">Total:</span>
                 <span className="text-2xl font-black text-primary">KSh {computeTotal.toLocaleString()}</span>
               </div>
             </div>
@@ -606,12 +606,12 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       {/* Status Messages */}
       <div aria-live="polite">
         {status.error && (
-          <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 backdrop-blur-sm">
+          <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 backdrop-blur-sm rounded-lg">
             {status.error}
           </div>
         )}
         {status.success && (
-          <div className="bg-green-500/20 border border-green-500/50 text-green-200 px-4 py-3 backdrop-blur-sm">
+          <div className="bg-green-500/20 border border-green-500/50 text-green-200 px-4 py-3 backdrop-blur-sm rounded-lg">
             {isEdit ? 'Changes saved.' : "Booking confirmed! We'll contact you shortly."}
           </div>
         )}
@@ -621,7 +621,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
       <button
         type="submit"
         disabled={status.saving}
-        className="w-full px-8 py-4 bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-white font-bold uppercase tracking-wider transition-all duration-500 shadow-2xl shadow-primary/50 hover:shadow-primary/70 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="w-full px-8 py-4 bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-400 text-white font-bold uppercase tracking-wider transition-all duration-500 shadow-2xl shadow-primary/50 hover:shadow-primary/70 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 rounded-xl"
       >
         {status.saving ? (isEdit ? 'Saving Changes...' : 'Confirming Booking...') : (isEdit ? 'Save Changes' : 'Confirm Booking')}
       </button>
