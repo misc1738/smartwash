@@ -16,7 +16,13 @@ const services = [
   { value: 'interior', label: 'Interior Deep Clean', price: 'KSh 2,500', duration: '1 hr' },
 ];
 
+import { useAuth } from '../context/AuthContext';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isEdit = Boolean(initial && initial.id);
   const [form, setForm] = useState({
     name: initial.name || '',
@@ -32,12 +38,12 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
   });
   const [status, setStatus] = useState({ saving: false, error: null, success: false });
   const [fieldErrors, setFieldErrors] = useState({});
-  
+
   const handlePhoneBlur = () => {
     try {
       const norm = normalizePhone(form.phone);
       setForm((s) => ({ ...s, phone: norm }));
-    } catch (_) {}
+    } catch (_) { }
   };
   const [availableTimes, setAvailableTimes] = useState([]);
   const [vehicles, setVehicles] = useState([]);
@@ -113,6 +119,18 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Auth Check
+    if (!user) {
+      navigate('/login', {
+        state: {
+          from: location,
+          bookingData: form
+        }
+      });
+      return;
+    }
+
     const err = validate();
     if (err) return setStatus({ saving: false, error: err, success: false });
     setStatus({ saving: true, error: null, success: false });
@@ -122,15 +140,15 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
         try {
           const saved = JSON.parse(localStorage.getItem('smartwash.vehicles') || '[]');
           const exists = saved.some(v => v.plate.trim().toUpperCase() === form.vehicle.plate.trim().toUpperCase());
-            // Ensure category is present when saving
-            const toSave = { ...form.vehicle };
-            if (!toSave.category && toSave.make && toSave.model) {
-              toSave.category = getModelCategory(toSave.make, toSave.model) || 'Unknown';
-            }
-            const next = exists ? saved : [...saved, toSave];
+          // Ensure category is present when saving
+          const toSave = { ...form.vehicle };
+          if (!toSave.category && toSave.make && toSave.model) {
+            toSave.category = getModelCategory(toSave.make, toSave.model) || 'Unknown';
+          }
+          const next = exists ? saved : [...saved, toSave];
           localStorage.setItem('smartwash.vehicles', JSON.stringify(next));
           setVehicles(next);
-        } catch (_) {}
+        } catch (_) { }
       }
 
       if (isEdit) {
@@ -189,7 +207,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
         return v;
       });
       setVehicles(enriched);
-    } catch (_) {}
+    } catch (_) { }
 
     // Auto-detect location by IP
     const detectLocation = async () => {
@@ -237,7 +255,7 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
     let active = true;
     const checkWeather = async () => {
       if (!form.date || !form.time || !geoLocation) return;
-      
+
       const weatherData = await getWeatherForSlot(
         geoLocation.latitude,
         geoLocation.longitude,
@@ -278,11 +296,10 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
           {services.map((service) => (
             <label
               key={service.value}
-              className={`relative cursor-pointer group transition-all duration-300 ${
-                form.service === service.value
+              className={`relative cursor-pointer group transition-all duration-300 ${form.service === service.value
                   ? 'bg-primary/20 border-primary/50'
                   : 'bg-white/5 border-white/10 hover:border-primary/30'
-              } border-2 backdrop-blur-sm p-4 flex flex-col`}
+                } border-2 backdrop-blur-sm p-4 flex flex-col`}
             >
               <input
                 type="radio"
@@ -316,18 +333,18 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             <User className="w-4 h-4 text-primary" />
             Full Name
           </label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              onBlur={() => { if (!form.name.trim()) setFieldErrors(f => ({ ...f, name: 'Please enter your full name.' })); else setFieldErrors(f => { const copy = { ...f }; delete copy.name; return copy; }); }}
-              placeholder="John Doe"
-              aria-invalid={!!fieldErrors.name}
-              aria-describedby={fieldErrors.name ? 'err-name' : undefined}
-              className={`w-full px-4 py-3 bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
-            />
-            {fieldErrors.name && <div id="err-name" className="text-xs text-red-300 mt-1">{fieldErrors.name}</div>}
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            onBlur={() => { if (!form.name.trim()) setFieldErrors(f => ({ ...f, name: 'Please enter your full name.' })); else setFieldErrors(f => { const copy = { ...f }; delete copy.name; return copy; }); }}
+            placeholder="John Doe"
+            aria-invalid={!!fieldErrors.name}
+            aria-describedby={fieldErrors.name ? 'err-name' : undefined}
+            className={`w-full px-4 py-3 bg-white/5 border ${fieldErrors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all`}
+          />
+          {fieldErrors.name && <div id="err-name" className="text-xs text-red-300 mt-1">{fieldErrors.name}</div>}
         </div>
 
         <div className="space-y-2">
@@ -414,9 +431,8 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
             placeholder="KDA 123A"
             aria-invalid={!!fieldErrors.vehiclePlate}
             aria-describedby={fieldErrors.vehiclePlate ? 'err-plate' : undefined}
-            className={`w-full px-4 py-3 bg-white/5 border text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${
-              (fieldErrors.vehiclePlate || (!isPlateValid && plateTouched)) ? 'border-red-500' : 'border-white/10'
-            }`}
+            className={`w-full px-4 py-3 bg-white/5 border text-white placeholder:text-white/40 backdrop-blur-sm focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${(fieldErrors.vehiclePlate || (!isPlateValid && plateTouched)) ? 'border-red-500' : 'border-white/10'
+              }`}
           />
           {fieldErrors.vehiclePlate ? (
             <div id="err-plate" className="text-xs text-red-300 mt-1">{fieldErrors.vehiclePlate}</div>
@@ -438,9 +454,8 @@ export default function BookingForm({ initial = {}, onSaved, onDirtyChange }) {
                 type="button"
                 key={`${v.plate}-${idx}`}
                 onClick={() => setForm((s) => ({ ...s, vehicle: { ...v } }))}
-                className={`px-3 py-1 text-sm border ${
-                  form.vehicle.plate === v.plate ? 'border-primary/60 bg-primary/10 text-primary' : 'border-white/10 text-white/70 hover:border-primary/40'
-                }`}
+                className={`px-3 py-1 text-sm border ${form.vehicle.plate === v.plate ? 'border-primary/60 bg-primary/10 text-primary' : 'border-white/10 text-white/70 hover:border-primary/40'
+                  }`}
               >
                 <span className="font-semibold">{v.make} {v.model}</span>
                 <span className="text-xs text-white/50 ml-2">{v.category ? `• ${v.category}` : ''}</span>

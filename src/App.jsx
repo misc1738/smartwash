@@ -94,8 +94,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/services" element={<RequireAuth><Services /></RequireAuth>} />
-            <Route path="/bookings" element={<RequireAuth><Bookings /></RequireAuth>} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/bookings" element={<Bookings />} />
             <Route path="/booking-confirmation" element={<RequireAuth><BookingConfirmation /></RequireAuth>} />
             <Route path="/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
             <Route path="/login" element={<Login />} />

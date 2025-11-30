@@ -286,7 +286,6 @@ export default function AboutPage() {
                                 className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary text-primary-foreground font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                             >
                                 <span>Experience SmartWash</span>
-                                <Sparkles className="w-5 h-5" />
                             </a>
                         </motion.div>
                     </motion.div>

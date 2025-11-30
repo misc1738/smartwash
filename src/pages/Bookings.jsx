@@ -194,7 +194,8 @@ export default function Bookings() {
               initial={{
                 ...(preService && { service: String(preService) }),
                 ...(preselectedDate && { date: String(preselectedDate) }),
-                ...(preselectedTime && { time: String(preselectedTime) })
+                ...(preselectedTime && { time: String(preselectedTime) }),
+                ...(location.state?.bookingData || {})
               }}
               onSaved={(booking) => {
                 if (booking) {
