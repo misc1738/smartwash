@@ -103,7 +103,7 @@ const BookingCalendar = () => {
             />
           </h2>
 
-          <div className="text-xl text-white/70 max-w-2xl mx-auto">
+          <div className="text-xl text-muted-foreground max-w-2xl mx-auto">
             <AnimatedText
               text="Choose your preferred date and time slot for a premium detailing experience"
               animationType="slideLeft"
@@ -145,8 +145,8 @@ const BookingCalendar = () => {
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleDateSelect(dayInfo.date)}
                       className={`relative p-4 rounded-xl transition-all duration-300 ${selectedDate === dayInfo.date
-                          ? 'bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/50'
-                          : 'bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 hover:border-primary/50'
+                        ? 'bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/50'
+                        : 'bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 hover:border-primary/50'
                         }`}
                     >
                       <div className="text-xs font-medium opacity-70 mb-1">{dayInfo.dayName}</div>
@@ -181,7 +181,7 @@ const BookingCalendar = () => {
                     ) : availability.length === 0 ? (
                       <div className="text-center py-12 bg-red-500/10 border border-red-500/30 rounded-xl">
                         <p className="text-red-400 font-semibold">No available slots for this date</p>
-                        <p className="text-white/50 text-sm mt-2">Please select another date</p>
+                        <p className="text-muted-foreground text-sm mt-2">Please select another date</p>
                       </div>
                     ) : (
                       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -195,8 +195,8 @@ const BookingCalendar = () => {
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setSelectedTime(time)}
                             className={`p-4 rounded-lg font-bold transition-all duration-300 ${selectedTime === time
-                                ? 'bg-primary-light text-primary-foreground shadow-lg shadow-primary-light/50'
-                                : 'bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 hover:border-primary-light/50'
+                              ? 'bg-primary-light text-primary-foreground shadow-lg shadow-primary-light/50'
+                              : 'bg-background border border-foreground/10 text-foreground hover:bg-foreground/5 hover:border-primary-light/50'
                               }`}
                           >
                             {time}
