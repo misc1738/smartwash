@@ -4,6 +4,7 @@ import { Sparkles, Shield, Droplet, ArrowRight } from 'lucide-react';
 import BlurText from './ui/BlurText';
 import AnimatedText from './ui/AnimatedText';
 import TextType from './ui/TextType';
+import ThemeImage from './ThemeImage';
 
 const About = () => {
   const navigate = useNavigate();
@@ -11,13 +12,11 @@ const About = () => {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background transition-colors duration-500">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.pexels.com/photos/6872609/pexels-photo-6872609.jpeg?auto=compress&cs=tinysrgb&w=1920"
+        <ThemeImage
+          srcDark="/img/about-dark.png"
+          srcLight="https://images.pexels.com/photos/6872609/pexels-photo-6872609.jpeg?auto=compress&cs=tinysrgb&w=1920"
           alt="Professional car wash"
-          className="w-full h-full object-cover opacity-20 dark:opacity-40 transition-opacity duration-500"
-          onError={(e) => {
-            e.target.src = "https://images.pexels.com/photos/3354647/pexels-photo-3354647.jpeg?auto=compress&cs=tinysrgb&w=1920";
-          }}
+          className="w-full h-full object-cover opacity-30 dark:opacity-50 transition-opacity duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/70"></div>
       </div>
